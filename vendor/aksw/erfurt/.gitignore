@@ -1,0 +1,19 @@
+*.log
+local.ini
+config.ini
+.settings
+.project
+.idea
+.buildpath
+.DS_Store
+.htaccess
+nbproject
+cache.properties
+cache.sqlite
+vendor
+composer.phar
+# build stuff
+build/
+cache/
+!build/phpcs.xml
+!build/phpcmd.xml

@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+<ruleset name="OntoWiki">
+    <description>Ontowiki's additiona sniffs for the coding standard.</description>
+</ruleset>
