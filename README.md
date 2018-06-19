@@ -1,8 +1,11 @@
 # vidp_test
 Test-Umgebung für die OntoWiki-basierte Entwicklung einer Video-Plattform
 <<<<<<< HEAD
+<<<<<<< HEAD
 geht
 =======
+=======
+>>>>>>> 64ba4a5d0ff7967fe5b4ad042db1adcdbbbfac78
 
 ### Installieren und Einrichten der Site-Extension
 Als Grundlage dient das Wiki des entsprechenden Repositorys. (https://github.com/AKSW/site.ontowiki/wiki)
@@ -46,4 +49,7 @@ Der Code muss im entsprechenden Site Model implementiert werden. Hier: ``` /var/
     ?>
 ```
 Im oberen Teil erfolgt die Einbindung des entsprechenden Models, Schemas usw. Im unteren Teil erfolgt die eigentliche Abfrage auf Basis von SPARQL.
+<<<<<<< HEAD
 >>>>>>> Update README.md
+=======
+>>>>>>> 64ba4a5d0ff7967fe5b4ad042db1adcdbbbfac78

@@ -1,0 +1,17 @@
+/**
+ * @copyright Copyright (c) 2014, {@link http://aksw.org AKSW}
+ * @license   http://opensource.org/licenses/gpl-license.php GNU General Public License (GPL)
+ */
+.configModules {
+    clear: left;
+}
+
+.width49 {
+    width: 49%;
+}
+.margin {
+    margin: 0.5%;
+}
+.float {
+    float: left;
+}
