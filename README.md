@@ -20,7 +20,9 @@ Als Grundlage dient das Wiki des entsprechenden Repositorys. (https://github.com
 
 
 ### Inhalte aus der Knowledge Base darstellen
-Inhalte können grundsätzlich nur mithilfe von SPARQL-Abfragen dargestellt werden. 
+Inhalte können grundsätzlich nur mithilfe von SPARQL-Abfragen dargestellt werden.
+Der Code muss im entsprechenden Site Model implementiert werden. Hier: ``` /var/www/html/OntoWiki/extensions/site/sites/local/types ```
+
 ```php
 <?php
     $headlineQuery = 'PREFIX vidp: <https://bmake.th-brandenburg.de/vidp#>' . PHP_EOL;
