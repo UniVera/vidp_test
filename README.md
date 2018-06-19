@@ -6,10 +6,10 @@ Als Grundlage dient das Wiki des entsprechenden Repositorys. (https://github.com
 
 1.	Clone Extension von GitHub nach <ontowikiroot>/extensions
 (Innerhalb des Verzeichnisses <ontowikiroot>/extensions
-“git clone https://github.com/AKSW/site.ontowiki.git site¬¬¬” ausführen);
+“git clone https://github.com/AKSW/site.ontowiki.git site” ausführen);
 2.	Neue (leere) Knowledge Base erstellen;
 3.	Die Source Codes der neuen Knowledge Base öffnen
-(„View all Ressources“  Reiter „Source“);
+(„View all Ressources“  Reiter „Source“);
 4.	Inhalte der Datei model.n3 in <ontowikiroot>/extensions/site/sites/example/data/model.n3 außer der @base-Zeile (@base <http://localhost/Site>) kopieren und in Source Codes beim Schritt 3 einsetzen;
 5.	Die Datei <ontowikiroot>/extensions/site/sites/example/config.ini entsprechend anpassen
 (model = "@base-URI der Knowledge Base")
