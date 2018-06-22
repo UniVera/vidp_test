@@ -1,0 +1,30 @@
+<div class="page-header">
+    <h1><?php echo $this->title ?>
+        <small>fuer FBW-Tube</small>
+    </h1>
+</div>
+<div class="jumbotron">
+    <h2>     </h2>
+
+        <?php
+        $id = $_GET['id'];
+        ?>
+
+        <?php
+        $videoLectureQuery = 'PREFIX vidp: <https://bmake.th-brandenburg.de/vidp#>' . PHP_EOL;
+        $videoLectureQuery .= 'PREFIX schema: <https://schema.org/>' . PHP_EOL;
+        $videoLectureQuery .= 'PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>' . PHP_EOL;
+        $videoLectureQuery .= 'SELECT ?headline ?description' . PHP_EOL;
+        $videoLectureQuery .= 'WHERE {<';
+        $videoLectureQuery .= $id;
+        $videoLectureQuery .= '> schema:description ?description ;' . PHP_EOL;
+        $videoLectureQuery .= 'schema:headline ?headline .' . PHP_EOL;
+        $videoLectureQuery .= 'FILTER( lang(?headline) = "de")' . PHP_EOL;
+        $videoLectureQuery .= '}' . PHP_EOL;
+        ?>
+
+        <?= $this->querylist($videoLectureQuery->description, 'vidp/types/videoInfo.phtml', array(), array('prefix' => '<li>', 'suffix' => '</li>')) ?>
+
+
+
+</div>
