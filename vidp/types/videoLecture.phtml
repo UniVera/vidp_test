@@ -4,27 +4,31 @@
     </h1>
 </div>
 <div class="jumbotron">
-    <h2>     </h2>
+    <h2>
 
-        <?php
-        $id = $_GET['id'];
-        ?>
+    </h2>
 
-        <?php
-        $videoLectureQuery = 'PREFIX vidp: <https://bmake.th-brandenburg.de/vidp#>' . PHP_EOL;
-        $videoLectureQuery .= 'PREFIX schema: <https://schema.org/>' . PHP_EOL;
-        $videoLectureQuery .= 'PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>' . PHP_EOL;
-        $videoLectureQuery .= 'SELECT ?headline ?description' . PHP_EOL;
-        $videoLectureQuery .= 'WHERE {<';
-        $videoLectureQuery .= $id;
-        $videoLectureQuery .= '> schema:description ?description ;' . PHP_EOL;
-        $videoLectureQuery .= 'schema:headline ?headline .' . PHP_EOL;
-        $videoLectureQuery .= 'FILTER( lang(?headline) = "de")' . PHP_EOL;
-        $videoLectureQuery .= '}' . PHP_EOL;
-        ?>
+    <?php
+    $id = $_GET['id'];
+    ?>
 
-        <?= $this->querylist($videoLectureQuery->description, 'vidp/types/videoInfo.phtml', array(), array('prefix' => '<li>', 'suffix' => '</li>')) ?>
-
+    <?php
+    $videoLectureQuery = 'PREFIX vidp: <https://bmake.th-brandenburg.de/vidp#>' . PHP_EOL;
+    $videoLectureQuery .= 'PREFIX schema: <https://schema.org/>' . PHP_EOL;
+    $videoLectureQuery .= 'PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>' . PHP_EOL;
+    $videoLectureQuery .= 'SELECT ?description ?headline ?url ?about' . PHP_EOL;
+    $videoLectureQuery .= 'WHERE {<';
+    $videoLectureQuery .= $id;
+    $videoLectureQuery .= '> schema:description ?description ;' . PHP_EOL;
+    $videoLectureQuery .= 'schema:headline ?headline ;' . PHP_EOL;
+    $videoLectureQuery .= 'schema:url ?url .' . PHP_EOL;
+#    $videoLectureQuery .= 'schema:about ?about .' . PHP_EOL;
+    $videoLectureQuery .= 'FILTER( lang(?headline) = "de")' . PHP_EOL;
+    $videoLectureQuery .= '}' . PHP_EOL;
+    ?>
+    <ul>
+        <?= $this->querylist($videoLectureQuery, 'vidp/types/videoInfo.phtml', array()) ?>
+    </ul>
 
 
 </div>

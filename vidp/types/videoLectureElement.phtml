@@ -5,8 +5,15 @@
     <div class="block">
         <div class="block">
             <?php
-            echo "<a href=$this->videoLecture> $this->headline</a>";
+                $base = "http://fbwbmakewiki2.th-brandenburg.de/OntoWiki/index.php/test/";
+                $a = "V";
+                $a = strtoupper($a);
+                $b = "ideo";
+                $c = "orlesung.html";
+                $e = "?id=";
+                $url = $base.$a.$b.$a.$c.$e.urlencode($this->videoLecture);
             ?>
+            <a href= "<?= htmlentities($url) ?>"><?=$this->headline?></a>
         </div>
     </div>
 </div>
