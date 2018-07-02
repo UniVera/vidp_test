@@ -1,7 +1,5 @@
 <div class="page-header">
-    <h1><?php echo $this->title ?>
-        <small>fuer FBW-Tube</small>
-    </h1>
+    <h2><?php echo $this->title ?></h2>
 </div>
 <div class="jumbotron">
     <?php
@@ -15,9 +13,8 @@
     $videoLectureElementQuery .= '}' . PHP_EOL;
     ?>
 
-    <h4><?= $this->_('Video Lectures') ?></h4>
     <ul>
-        <?= $this->querylist($videoLectureElementQuery, 'vidp/types/videoLectureElement.phtml', array(), array('prefix' => '<li>', 'suffix' => '</li>')) ?>
+        <h4><?= $this->querylist($videoLectureElementQuery, 'vidp/types/videoLectureElement.phtml', array(), array('prefix' => '<li>', 'suffix' => '</li>')) ?></h4>
     </ul>
 </div>
 

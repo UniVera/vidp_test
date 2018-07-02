@@ -5,11 +5,13 @@
     <div class="block">
         <div class="block">
             <?php
-            echo "<h2>" . $this->headline . "</h2>";
+            echo "<h3>" . $this->headline . "</h3>";
             echo "<br><blockquote>";
+            echo "<small>";
             echo $this->description;
+            echo "</small>";
             echo "<br>";
-            echo "<a href=$this->url><img src='https://demo.amsl.technology/OntoWiki/extensions/themes/amsl/images/ontowiki-logo.png'></a>";
+            echo "<a target=_blank href=$this->url><img src='https://demo.amsl.technology/OntoWiki/extensions/themes/amsl/images/ontowiki-logo.png'></a>";
             echo "</blockquote><br>";
             echo $this->about;
             ?>
