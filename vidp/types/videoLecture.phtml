@@ -14,12 +14,14 @@
     $videoLectureQuery = 'PREFIX vidp: <https://bmake.th-brandenburg.de/vidp#>' . PHP_EOL;
     $videoLectureQuery .= 'PREFIX schema: <https://schema.org/>' . PHP_EOL;
     $videoLectureQuery .= 'PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>' . PHP_EOL;
-    $videoLectureQuery .= 'SELECT ?description ?headline ?url ?about' . PHP_EOL;
+    $videoLectureQuery .= 'SELECT ?description ?url ?headline ?about ?thumbnail' . PHP_EOL;
     $videoLectureQuery .= 'WHERE {<';
     $videoLectureQuery .= $id;
     $videoLectureQuery .= '> schema:description ?description ;' . PHP_EOL;
     $videoLectureQuery .= 'schema:headline ?headline ;' . PHP_EOL;
-    $videoLectureQuery .= 'schema:url ?url .' . PHP_EOL;
+	$videoLectureQuery .= 'schema:url ?url ;' . PHP_EOL;
+    $videoLectureQuery .= 'schema:thumbnail ?logo .' . PHP_EOL;
+	$videoLectureQuery .= '?logo schema:name ?thumbnail .' . PHP_EOL;
 #    $videoLectureQuery .= 'schema:about ?about .' . PHP_EOL;
     $videoLectureQuery .= 'FILTER( lang(?headline) = "de")' . PHP_EOL;
     $videoLectureQuery .= '}' . PHP_EOL;

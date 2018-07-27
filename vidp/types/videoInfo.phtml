@@ -5,13 +5,15 @@
     <div class="block">
         <div class="block">
             <?php
+            echo "<a target=_blank><img src='http://fbwbmakewiki2.th-brandenburg.de/OntoWiki/extensions/site/sites/vidp/img/$this->thumbnail' class='img-responsive' alt='Logo' width='304' height='236'></a>";
             echo "<h3>" . $this->headline . "</h3>";
             echo "<br><blockquote>";
             echo "<small>";
             echo $this->description;
             echo "</small>";
             echo "<br>";
-            echo "<a target=_blank href=$this->url><img src='https://demo.amsl.technology/OntoWiki/extensions/themes/amsl/images/ontowiki-logo.png'></a>";
+            echo "<h4> Zur Videovorlesung </h4> <br>";
+            echo "<a target=_blank href=$this->url><img src='http://fbwbmakewiki2.th-brandenburg.de/OntoWiki/extensions/site/sites/vidp/img/play_button.png' class='img-responsive' alt='Cinque Terre' width='100' height='100'></a>";
             echo "</blockquote><br>";
             echo $this->about;
             ?>

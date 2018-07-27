@@ -13,7 +13,33 @@
                 $e = "?id=";
                 $url = $base.$a.$b.$a.$c.$e.urlencode($this->videoLecture);
             ?>
+            <!--
             <a href= "<?= htmlentities($url) ?>"><?=$this->headline?></a>
+            -->
+
+            <table>
+                <tr>
+                    <td rowspan="2" width="20%">
+                        <?php echo "<img src='http://fbwbmakewiki2.th-brandenburg.de/OntoWiki/extensions/site/sites/vidp/img/$this->thumbnail' class='img-responsive' width='200' height='150'>" ?>
+                    </td>
+                    <td style="padding-left:30px">
+                        <font size="4">
+                            <a href= "<?= htmlentities($url) ?>"><b><?=$this->label?></b></a>
+                        </font>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding-left:30px">
+
+                        <?=
+                        mb_substr($this->description, 0, 400);
+                        echo "...";
+                        ?>
+                    </td>
+                </tr>
+            </table>
+            <br>
         </div>
     </div>
 </div>
