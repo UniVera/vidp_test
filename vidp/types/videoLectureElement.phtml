@@ -5,13 +5,13 @@
     <div class="block">
         <div class="block">
             <?php
-                $base = "http://fbwbmakewiki2.th-brandenburg.de/OntoWiki/index.php/test/";
-                $a = "V";
-                $a = strtoupper($a);
-                $b = "ideo";
-                $c = "orlesung.html";
-                $e = "?id=";
-                $url = $base.$a.$b.$a.$c.$e.urlencode($this->videoLecture);
+            $base = "http://fbwbmakewiki2.th-brandenburg.de/OntoWiki/index.php/test/";
+            $a = "V";
+            $a = strtoupper($a);
+            $b = "ideo";
+            $c = "orlesung.html";
+            $e = "?id=";
+            $url = $base.$a.$b.$a.$c.$e.urlencode($this->videoLecture);
             ?>
             <!--
             <a href= "<?= htmlentities($url) ?>"><?=$this->headline?></a>
@@ -20,7 +20,7 @@
             <table>
                 <tr>
                     <td rowspan="2" width="20%">
-                        <?php echo "<img src='http://fbwbmakewiki2.th-brandenburg.de/OntoWiki/extensions/site/sites/vidp/img/$this->thumbnail' class='img-responsive' width='200' height='150'>" ?>
+                        <a href= "<?= htmlentities($url)?>"><?php echo"<img src='http://fbwbmakewiki2.th-brandenburg.de/OntoWiki/extensions/site/sites/vidp/img/$this->thumbnail' class='img-responsive' width='200' height='150'>"?></a>
                     </td>
                     <td style="padding-left:30px">
                         <font size="4">
