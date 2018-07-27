@@ -38,8 +38,5 @@ Der Code muss im entsprechenden Site Model implementiert werden. Hier: ``` /var/
    <?= $this->querylist($headlineQuery, 'local/types/person.phtml', array(), array('prefix' => '<li>', 'suffix' => '</li>')) ?>
 
 </ul>
-<!--    <?php
-	echo $headlineQuery->literal(array('property' => 'schema:headline'));
-    ?>
 ```
 Im oberen Teil erfolgt die Einbindung des entsprechenden Models, Schemas usw. Im unteren Teil erfolgt die eigentliche Abfrage auf Basis von SPARQL.
