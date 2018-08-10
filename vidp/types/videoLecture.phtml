@@ -26,9 +26,20 @@
     $videoLectureQuery .= 'FILTER( lang(?headline) = "de")' . PHP_EOL;
     $videoLectureQuery .= '}' . PHP_EOL;
     ?>
-    <ul>
-        <?= $this->querylist($videoLectureQuery, 'vidp/types/videoInfo.phtml', array()) ?>
-    </ul>
 
+    <?php
+    $videoLectureAboutQuery = 'PREFIX vidp: <https://bmake.th-brandenburg.de/vidp#>' . PHP_EOL;
+    $videoLectureAboutQuery .= 'PREFIX schema: <https://schema.org/>' . PHP_EOL;
+    $videoLectureAboutQuery .= 'PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>' . PHP_EOL;
+    $videoLectureAboutQuery .= 'SELECT ?about' . PHP_EOL;
+    $videoLectureAboutQuery .= 'WHERE {<';
+    $videoLectureAboutQuery .= $id;
+    $videoLectureAboutQuery .= '> schema:about ?about .' . PHP_EOL;
+    $videoLectureAboutQuery .= '}' . PHP_EOL;
+    ?>
+    <?= $this->querylist($videoLectureQuery, 'vidp/types/videoInfo.phtml', array()) ?>
+    <!--
+    <?= $this->querylist($videoLectureAboutQuery, 'vidp/types/videoInfo.phtml', array()) ?>
+    -->
 
 </div>

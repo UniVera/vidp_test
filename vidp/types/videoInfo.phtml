@@ -1,42 +1,46 @@
 <div class="box">
     <h2>
-
     </h2>
-    <div class="block">
+    <?php if ($this->about) : ?>
+    <?php    echo ($this->about); ?>
+    <?php else: ?>
+        <div class="block">
             <table class="table-responsive">
                 <tr>
-                    <td >
+                    <td>
                         <?php
                         echo "<h4>" . $this->headline . "</h4>"
                         ?>
                     </td>
-                    <td width="16%">
+                    <td width="16%" align="center">
                         <?php
                         echo "<a target=_blank ><img src='http://fbwbmakewiki2.th-brandenburg.de/OntoWiki/extensions/site/sites/vidp/img/$this->thumbnail' class='img-responsive' alt='Logo' width='304' height='236'></a>"
                         ?>
                     </td>
                 </tr>
                 <tr>
-                    <td>
+                    <td colspan="2">
                         <?php
                         echo $this->description;
-                        ?>
-                    </td>
-                    <td align="center">
-                        <?php
-                        echo "Zur Videovorlesung <br>";
-                        echo "<a target=_blank href=$this->url width='30' height='30'><img src='http://fbwbmakewiki2.th-brandenburg.de/OntoWiki/extensions/site/sites/vidp/img/play_button.png' alt='Cinque Terre' width='50' height='50'></a>";
                         ?>
                     </td>
                 </tr>
                 <tr>
                     <td>
                         <?php
-                            echo $this->about;
+                        echo $this->about;
+                        ?>
+                    </td>
+                </tr>
+                <tr align="center">
+                    <td align="center" colspan="2">
+                        <?php
+                        echo "<a target=_blank href=$this->url width='30' height='30'><img src='http://fbwbmakewiki2.th-brandenburg.de/OntoWiki/extensions/site/sites/vidp/img/play_button.png' alt='Cinque Terre' width='32' height='32'></a>";
+                        echo "<br> Zur Videovorlesung";
                         ?>
                     </td>
                 </tr>
             </table>
-    </div>
-
+        </div>
+    <?php endif; ?>
 </div>

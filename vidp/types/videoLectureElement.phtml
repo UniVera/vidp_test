@@ -32,11 +32,10 @@
                 <tr>
                     <td style="padding-left:30px">
                         <?=
-                        mb_substr($this->description, 0, strpos($this->description, ". "));
-                        echo " ";
+                        strstr($this->description, ". ", true);
+                        echo ". ";
                         ?>
                         <a href="<?= htmlentities($url) ?>">mehr</a>
-
                     </td>
                 </tr>
             </table>
