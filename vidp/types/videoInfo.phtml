@@ -2,7 +2,19 @@
     <h2>
     </h2>
     <?php if ($this->about) : ?>
-    <?php    echo ($this->about); ?>
+    <?php    
+        $moduleQuery = 'PREFIX vidp: <https://bmake.th-brandenburg.de/vidp#>' . PHP_EOL;
+        $moduleQuery .= 'PREFIX schema: <https://schema.org/>' . PHP_EOL;
+        $moduleQuery .= 'PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>' . PHP_EOL;
+        $moduleQuery .= 'SELECT ?label ?url' . PHP_EOL;
+        $moduleQuery .= 'WHERE {<';
+        $moduleQuery .= $this->about;
+        $moduleQuery .= '> schema:url ?url ;' . PHP_EOL;
+        $moduleQuery .= 'rdfs:label ?label .' . PHP_EOL;
+        $moduleQuery .= '}' . PHP_EOL;
+
+        echo $this->querylist($moduleQuery, 'vidp/types/moduleInfo.phtml', array());
+    ?>
     <?php else: ?>
         <div class="block">
             <table class="table-responsive">

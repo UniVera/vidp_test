@@ -38,8 +38,10 @@
     $videoLectureAboutQuery .= '}' . PHP_EOL;
     ?>
     <?= $this->querylist($videoLectureQuery, 'vidp/types/videoInfo.phtml', array()) ?>
-    <!--
+    <h5>
+        Diese Videovorlesung ist Bestandteil folgender Module:
+    </h5>
     <?= $this->querylist($videoLectureAboutQuery, 'vidp/types/videoInfo.phtml', array()) ?>
-    -->
+
 
 </div>
