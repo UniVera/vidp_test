@@ -1,0 +1,75 @@
+<!-- Datei zur Zusammensetzung der Informationen für eine Videovorlesung. -->
+<div class="page-header">
+    <h2><?php echo $this->title ?></h2>
+</div>
+<div class="jumbotron">
+
+    <?php
+    $id = $_GET['id']; #Holen der ID der jeweiligen Videolectures
+    ?>
+
+    <?php # für videoInfo.phtml
+    $videoLectureQuery = 'PREFIX vidp: <https://bmake.th-brandenburg.de/vidp#>' . PHP_EOL;
+    $videoLectureQuery .= 'PREFIX schema: <https://schema.org/>' . PHP_EOL;
+    $videoLectureQuery .= 'PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>' . PHP_EOL;
+    $videoLectureQuery .= 'SELECT ?description ?url ?headline ?about ?thumbnail' . PHP_EOL;
+    $videoLectureQuery .= 'WHERE {<';
+    $videoLectureQuery .= $id;
+    $videoLectureQuery .= '> schema:description ?description ;' . PHP_EOL;
+    $videoLectureQuery .= 'schema:headline ?headline ;' . PHP_EOL;
+    $videoLectureQuery .= 'schema:url ?url ;' . PHP_EOL;
+    $videoLectureQuery .= 'schema:thumbnail ?logo .' . PHP_EOL;
+    $videoLectureQuery .= '?logo schema:name ?thumbnail .' . PHP_EOL;
+    $videoLectureQuery .= 'FILTER( lang(?headline) = "de")' . PHP_EOL;
+    $videoLectureQuery .= '}' . PHP_EOL;
+    ?>
+
+    <?php # für aboutQuery.phtml
+    $videoLectureAboutQuery = 'PREFIX vidp: <https://bmake.th-brandenburg.de/vidp#>' . PHP_EOL;
+    $videoLectureAboutQuery .= 'PREFIX schema: <https://schema.org/>' . PHP_EOL;
+    $videoLectureAboutQuery .= 'PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>' . PHP_EOL;
+    $videoLectureAboutQuery .= 'SELECT ?about' . PHP_EOL;
+    $videoLectureAboutQuery .= 'WHERE {<';
+    $videoLectureAboutQuery .= $id;
+    $videoLectureAboutQuery .= '> schema:about ?about .' . PHP_EOL;
+    $videoLectureAboutQuery .= '}' . PHP_EOL;
+    ?>
+
+    <?php # für clipInfo.phtml
+    $videoLectureClipsQuery = 'PREFIX vidp: <https://bmake.th-brandenburg.de/vidp#>' . PHP_EOL;
+    $videoLectureClipsQuery .= 'PREFIX schema: <https://schema.org/>' . PHP_EOL;
+    $videoLectureClipsQuery .= 'PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>' . PHP_EOL;
+    $videoLectureClipsQuery .= 'SELECT ?headlineclips ?urlclips ?durationclips' . PHP_EOL;
+    $videoLectureClipsQuery .= 'WHERE {    
+                                ?doubleclips a vidp:DoubleClip;   
+                                schema:isPartOf <';
+    $videoLectureClipsQuery .= $id;
+    $videoLectureClipsQuery .= '>; 
+                          schema:headline	?headlineclips;
+                          schema:duration	?durationclips;
+                          schema:url ?urlclips.' . PHP_EOL;
+    $videoLectureClipsQuery .= '}' . PHP_EOL;
+    $videoLectureClipsQuery .= 'ORDER BY ASC(?urlclips)' . PHP_EOL;
+    ?>
+
+    <?= $this->querylist($videoLectureQuery, 'vidp/types/videoLecture/videoInfo.phtml', array()) ?>
+
+    <h5>
+        Diese Videovorlesung beinhaltet folgende Teile:
+    </h5>
+    <table class="table">
+        <tr>
+            <th>Teilvideo</th>
+            <th>Dauer</th>
+        </tr>
+        <?= $this->querylist($videoLectureClipsQuery, 'vidp/types/videoLecture/clipInfo.phtml', array()) ?>
+    </table>
+
+    <br>
+    <h5>
+        Diese Videovorlesung ist Bestandteil folgender Module:
+    </h5>
+    <?= $this->querylist($videoLectureAboutQuery, 'vidp/types/videoLecture/aboutQuery.phtml', array()) ?>
+
+
+</div>

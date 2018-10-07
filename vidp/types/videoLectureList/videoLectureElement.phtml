@@ -1,31 +1,40 @@
+<!-- Datei zur Darstellung einzelner Videovorlesungen als Listenelement -->
 <div class="box">
-    <h2>
-
-    </h2>
     <div class="block">
         <div class="block">
             <?php
             $base = "http://fbwbmakewiki2.th-brandenburg.de/OntoWiki/index.php/test/";
             $url = $base . "VideoVorlesung.html?id=" . urlencode($this->videoLecture);
             ?>
-            <!--
-            <a href= "<?= htmlentities($url) ?>"><?= $this->headline ?></a>
-            -->
+
+            <?php
+            $videoLectureDurationQuery = 'PREFIX vidp: <https://bmake.th-brandenburg.de/vidp#>' . PHP_EOL;
+            $videoLectureDurationQuery .= 'PREFIX schema: <https://schema.org/>' . PHP_EOL;
+            $videoLectureDurationQuery .= 'PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>' . PHP_EOL;
+            $videoLectureDurationQuery .= 'SELECT ?durationclips' . PHP_EOL;
+            $videoLectureDurationQuery .= 'WHERE { ?clips a vidp:DoubleClip;' . PHP_EOL;
+            $videoLectureDurationQuery .= 'schema:isPartOf <';
+            $videoLectureDurationQuery .= $this->videoLecture;
+            $videoLectureDurationQuery .= '>; schema:duration	?durationclips. }' . PHP_EOL;
+            ?>
+
 
             <table>
                 <tr>
-                    <td rowspan="2" width="20%">
+                    <td rowspan="2" width="20%" height="80">
                         <a href="<?= htmlentities($url) ?>"><?php echo "<img src='http://fbwbmakewiki2.th-brandenburg.de/OntoWiki/extensions/site/sites/vidp/img/$this->thumbnail' class='img-responsive' width='200' height='150'>" ?></a>
                     </td>
-                    <td style="padding-left:30px">
+                    <td height="40">
                         <font size="4">
                             <a href="<?= htmlentities($url) ?>"><b><?= $this->label ?></b></a>
                         </font>
-
+                    </td>
+                    <td align="right" style="padding-right:80px">
+                        <?php #echo "Dauer: "; echo gmdate("H:i:s", $sec); ?>
                     </td>
                 </tr>
                 <tr>
-                    <td style="padding-left:30px">
+                    <td valign="top" colspan="2" width="65%">
                         <?=
                         strstr($this->description, ". ", true);
                         echo ". ";

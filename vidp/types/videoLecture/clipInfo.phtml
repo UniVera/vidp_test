@@ -1,0 +1,20 @@
+<!-- Datei zur Anzeige des Chapterlinks und der Chapterlänge in einer Tabelle -->
+<div class="box">
+    <h2>
+    </h2>
+    <div class="block">
+        <tr>
+            <td>
+                <?php
+                echo "<a target=_blank href=$this->urlclips>$this->headlineclips</a>";
+                ?>
+            </td>
+            <td>
+                <?php
+                $duration = new DateInterval($this->durationclips); #Parsen des Queries videoLectureClips (in videoLecture.phtml) in $duration
+                echo $duration->format('%i:%S');
+                ?>
+            </td>
+        </tr>
+    </div>
+</div>

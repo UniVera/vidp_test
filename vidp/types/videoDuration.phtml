@@ -1,0 +1,9 @@
+<?php
+
+    $d = new DateInterval($this->durationclips);
+    $minutes = $d->format('%i');
+    $seconds = $d->format('%s');
+    $time = $minutes * 60 + $seconds;
+
+    echo $time;
+?>
