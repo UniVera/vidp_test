@@ -39,7 +39,7 @@
     $videoLectureClipsQuery = 'PREFIX vidp: <https://bmake.th-brandenburg.de/vidp#>' . PHP_EOL;
     $videoLectureClipsQuery .= 'PREFIX schema: <https://schema.org/>' . PHP_EOL;
     $videoLectureClipsQuery .= 'PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>' . PHP_EOL;
-    $videoLectureClipsQuery .= 'SELECT ?headlineclips ?urlclips ?durationclips' . PHP_EOL;
+    $videoLectureClipsQuery .= 'SELECT ?headlineclips ?labelclips ?urlclips ?durationclips ?dateClips' . PHP_EOL;
     $videoLectureClipsQuery .= 'WHERE {    
                                 ?doubleclips a vidp:DoubleClip;   
                                 schema:isPartOf <';
@@ -47,9 +47,11 @@
     $videoLectureClipsQuery .= '>; 
                           schema:headline	?headlineclips;
                           schema:duration	?durationclips;
+                          rdfs:label        ?labelclips;
+                          schema:dateCreated ?dateClips ;
                           schema:url ?urlclips.' . PHP_EOL;
     $videoLectureClipsQuery .= '}' . PHP_EOL;
-    $videoLectureClipsQuery .= 'ORDER BY ASC(?urlclips)' . PHP_EOL;
+    $videoLectureClipsQuery .= 'ORDER BY ASC(?labelclips)' . PHP_EOL;
     ?>
 
     <?= $this->querylist($videoLectureQuery, 'vidp/types/videoLecture/videoInfo.phtml', array()) ?>
@@ -57,11 +59,13 @@
     <h5>
         Diese Videovorlesung beinhaltet folgende Teile:
     </h5>
-    <table class="table">
-        <tr>
-            <th>Teilvideo</th>
-            <th>Dauer</th>
-        </tr>
+    <table class="table responsive table-hover table-bordered">
+        <thead class="thead-dark">
+            <tr>
+                <th>Teilvideo</th>
+                <th>Dauer</th>
+            </tr>
+        </thead>
         <?= $this->querylist($videoLectureClipsQuery, 'vidp/types/videoLecture/clipInfo.phtml', array()) ?>
     </table>
 

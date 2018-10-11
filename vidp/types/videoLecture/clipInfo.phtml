@@ -4,12 +4,12 @@
     </h2>
     <div class="block">
         <tr>
-            <td>
+            <td align="left">
                 <?php
                 echo "<a target=_blank href=$this->urlclips>$this->headlineclips</a>";
                 ?>
             </td>
-            <td>
+            <td align="right">
                 <?php
                 $duration = new DateInterval($this->durationclips); #Parsen des Queries videoLectureClips (in videoLecture.phtml) in $duration
                 echo $duration->format('%i:%S');
