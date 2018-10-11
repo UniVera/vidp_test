@@ -53,17 +53,16 @@
     $videoLectureClipsQuery .= '}' . PHP_EOL;
     $videoLectureClipsQuery .= 'ORDER BY ASC(?labelclips)' . PHP_EOL;
     ?>
-
     <?= $this->querylist($videoLectureQuery, 'vidp/types/videoLecture/videoInfo.phtml', array()) ?>
 
     <h5>
         Diese Videovorlesung beinhaltet folgende Teile:
     </h5>
-    <table class="table responsive table-hover table-bordered">
-        <thead class="thead-dark">
+    <table class="table responsive table-hover">
+        <thead>
             <tr>
-                <th>Teilvideo</th>
-                <th>Dauer</th>
+                <th class="text-left">Teilvideo</th>
+                <th class="text-right">Dauer</th>
             </tr>
         </thead>
         <?= $this->querylist($videoLectureClipsQuery, 'vidp/types/videoLecture/clipInfo.phtml', array()) ?>
