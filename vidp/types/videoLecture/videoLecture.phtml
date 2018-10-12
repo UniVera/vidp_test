@@ -17,10 +17,10 @@
     $videoLectureQuery .= $id;
     $videoLectureQuery .= '> schema:description ?description ;' . PHP_EOL;
     $videoLectureQuery .= 'schema:headline ?headline ;' . PHP_EOL;
-    $videoLectureQuery .= 'schema:url ?url ;' . PHP_EOL;
+    $videoLectureQuery .= 'schema:url ?url ; schema:inLanguage ?language ;' . PHP_EOL;
     $videoLectureQuery .= 'schema:thumbnail ?logo .' . PHP_EOL;
     $videoLectureQuery .= '?logo schema:name ?thumbnail .' . PHP_EOL;
-    $videoLectureQuery .= 'FILTER( lang(?headline) = "de")' . PHP_EOL;
+    $videoLectureQuery .= 'FILTER( lang(?headline) = ?language)' . PHP_EOL;
     $videoLectureQuery .= '}' . PHP_EOL;
     ?>
 
@@ -53,7 +53,17 @@
     $videoLectureClipsQuery .= '}' . PHP_EOL;
     $videoLectureClipsQuery .= 'ORDER BY ASC(?labelclips)' . PHP_EOL;
     ?>
-    <?= $this->querylist($videoLectureQuery, 'vidp/types/videoLecture/videoInfo.phtml', array()) ?>
+
+    <?php
+    $result = $this->querylist($videoLectureClipsQuery, 'vidp/types/videoLecture/clipInfo.phtml', array('block' => 'time'));
+    $result =  preg_replace('/\s+/', '', $result);
+    $result = explode( '|', $result);
+    $result = substr($result[1], 0, 10);
+    $time = date_create($result);
+    $time = date_format($time, "M. Y");
+    ?>
+
+    <?= $this->querylist($videoLectureQuery, 'vidp/types/videoLecture/videoInfo.phtml', array('time' => $time)) ?>
 
     <h5>
         Diese Videovorlesung beinhaltet folgende Teile:
@@ -65,7 +75,7 @@
                 <th class="text-right">Dauer</th>
             </tr>
         </thead>
-        <?= $this->querylist($videoLectureClipsQuery, 'vidp/types/videoLecture/clipInfo.phtml', array()) ?>
+        <?= $this->querylist($videoLectureClipsQuery, 'vidp/types/videoLecture/clipInfo.phtml', array('block' => 'video')) ?>
     </table>
 
     <br>

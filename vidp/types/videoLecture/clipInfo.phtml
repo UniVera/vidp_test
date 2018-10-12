@@ -2,19 +2,26 @@
 <div class="box">
     <h2>
     </h2>
+
     <div class="block">
-        <tr>
-            <td align="left">
-                <?php
-                echo "<a target=_blank href=$this->urlclips>$this->headlineclips</a>";
-                ?>
-            </td>
-            <td align="right">
-                <?php
-                $duration = new DateInterval($this->durationclips); #Parsen des Queries videoLectureClips (in videoLecture.phtml) in $duration
-                echo $duration->format('%i:%S');
-                ?>
-            </td>
-        </tr>
+        <?php
+        if ($this->block == 'video') {
+            echo "<tr>";
+            echo "<td align=\"left\">";
+            echo "<a target=_blank href=$this->urlclips>$this->headlineclips</a>";
+            echo "</td>";
+
+            echo "<td align=\"right\">";
+            $duration = new DateInterval($this->durationclips); #Parsen des Queries videoLectureClips (in videoLecture.phtml) in $duration
+            echo $duration->format('%i:%S');
+            echo "</td>";
+            echo "</tr>";
+        } else if ($this->block == 'time') {
+            echo "|";
+            echo $this->dateClips;
+        }
+
+        ?>
+
     </div>
 </div>
