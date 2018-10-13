@@ -11,100 +11,108 @@
  */
 
 // this is the standard template data
-$templateData           = $this->templateData;
+$templateData = $this->templateData;
 ?>
 <!doctype html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xmlns:dc="http://purl.org/dc/terms/" xmlns:foaf="http://xmlns.com/foaf/0.1/">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xmlns:dc="http://purl.org/dc/terms/"
+      xmlns:foaf="http://xmlns.com/foaf/0.1/">
 <head>
-<meta charset="UTF-8">
-<title>
-    <?= $templateData['title'] ?> &mdash; <?= $this->siteConfig['name'] ?>
-</title>
+    <meta charset="UTF-8">
+    <title>
+        <?= $templateData['title'] ?> &mdash; <?= $this->siteConfig['name'] ?>
+    </title>
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="generator" content="<?= $this->generator ?>" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="generator" content="<?= $this->generator ?>"/>
 
-<link rel="alternate" type="application/rdf+xml" href="<?= $this->resourceUri ?>.rdf" />
-<link rel="pingback" href="<?= $this->pingbackUrl ?>" />
+    <link rel="alternate" type="application/rdf+xml" href="<?= $this->resourceUri ?>.rdf"/>
+    <link rel="pingback" href="<?= $this->pingbackUrl ?>"/>
 
-<link rel="<?= $this->curie('http://xmlns.com/foaf/0.1/primaryTopic') ?>" href="<?= $this->resourceUri?>" />
-<link type="text/css" href="<?= $this->baseUri ?>/css/bootstrap.css" rel="stylesheet" />
-<link type="text/css" href="<?= $this->baseUri ?>/css/layout.css" rel="stylesheet" />
-<link type="text/css" href="<?= $this->baseUri ?>/css/sticky-footer-navbar.css" rel="stylesheet" />
-<link type="text/css" href="<?= $this->baseUri ?>/css/bootstrap.css.map"/>
-<link type="text/css" href="<?= $this->baseUri ?>/css/bootstrap-theme.css.map"/>
-<link type="text/css" href="<?= $this->baseUri ?>/css/bootstrap-glyphicons.css"/>
+    <link rel="<?= $this->curie('http://xmlns.com/foaf/0.1/primaryTopic') ?>" href="<?= $this->resourceUri ?>"/>
+    <link type="text/css" href="<?= $this->baseUri ?>/css/bootstrap.css" rel="stylesheet"/>
+    <link type="text/css" href="<?= $this->baseUri ?>/css/layout.css" rel="stylesheet"/>
+    <link type="text/css" href="<?= $this->baseUri ?>/css/sticky-footer-navbar.css" rel="stylesheet"/>
+    <link type="text/css" href="<?= $this->baseUri ?>/css/bootstrap.css.map"/>
+    <link type="text/css" href="<?= $this->baseUri ?>/css/bootstrap-theme.css.map"/>
+    <link type="text/css" href="<?= $this->baseUri ?>/css/bootstrap-glyphicons.css"/>
+    <link type="text/css" href="<?= $this->baseUri ?>/css/modifications.css" rel="stylesheet"/>
 
 
-<!-- jQuery -->
-<script type="text/javascript" src="<?= $this->baseUri ?>/js/jquery.js"></script>
+    <!-- jQuery -->
+    <script type="text/javascript" src="<?= $this->baseUri ?>/js/jquery.js"></script>
 
-<style type="text/css">
-body {
-    padding-top: 60px;
-    padding-bottom: 40px;
-}
-</style>
+    <style type="text/css">
+        body {
+            padding-top: 60px;
+            padding-bottom: 40px;
+        }
+    </style>
 
-<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-<!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
-<?php
+    <?php
     // includes the GA header script
     // includes the exhibit header links
     // other head scripts
     $this->headScript();
-?>
+    ?>
 </head>
 
 <body
     <?php foreach ($this->namespaces as $prefix => $ns): ?>
-    <?= ' xmlns:' . $prefix . '="' . $ns . '"' ?><?php endforeach; ?>>
+        <?= ' xmlns:' . $prefix . '="' . $ns . '"' ?><?php endforeach; ?>>
 <div id="wrap">
-<div class="navbar navbar-default navbar-fixed-top" role="navigation">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="sr-only"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="http://fbwbmakewiki2.th-brandenburg.de/OntoWiki/index.php/test/VideoVorlesungen">fbwTube</a>
-        </div>
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand"
+                   href="http://fbwbmakewiki2.th-brandenburg.de/OntoWiki/index.php/test/VideoVorlesungen"><img
+                            style="max-width:36px; margin-top: -10px;"
+                            src='http://fbwbmakewiki2.th-brandenburg.de/OntoWiki/extensions/site/sites/vidp/img/fbwTube_logo.svg'>
+                    fbwTube</a>
+            </div>
             <?php
             $navResource = $this->templateOptions()->getValue('http://rdfs.org/ns/void#rootResource');
             $navOptions = array(
                 'navResource' => $navResource,
                 'navId' => 'navbar-main',
-                'suffix'    => '<!-- /#nav-main -->',
+                'suffix' => '<!-- /#nav-main -->',
                 'activeUrl' => $this->resourceUri,
                 'listClass' => 'nav navbar-nav',
                 'navClass' => 'navbar-collapse collapse'
             );
             echo $this->navigationList($navOptions);
             ?>
+        </div>
     </div>
-</div>
 
-<div class="container">
-    <?= $this->renderx(); ?>
-    <!-- Example row of columns for a Feed -->
-    <div class="row">
-        <?= $this->partial('example/types/feed.phtml', $this->templateData) ?>
+    <div class="container">
+        <?= $this->renderx(); ?>
+        <!-- Example row of columns for a Feed -->
+        <div class="row">
+            <?= $this->partial('example/types/feed.phtml', $this->templateData) ?>
+        </div>
+    </div> <!-- /container -->
+    <div class="pull-right">
+        <button class="btn btn-default toTop"><span class="glyphicon glyphicon-chevron-up"></span></button>
     </div>
-</div> <!-- /container -->
-<div class="pull-right"><button class="btn btn-default toTop"><span class="glyphicon glyphicon-chevron-up"></span></button></div>
 </div>
-    <div id="footer">
-      <div class="container">
+<div id="footer">
+    <div class="container">
         <p class="text-muted">&copy; Technische Hochschule Brandenburg - Fachbereich Wirtschaft 2018</p>
-      </div>
     </div>
+</div>
 
 <script type="text/javascript" src="<?= $this->baseUri ?>/js/jquery.js"></script>
 <script type="text/javascript" src="<?= $this->baseUri ?>/js/bootstrap.js"></script>
