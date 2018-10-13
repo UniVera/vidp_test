@@ -16,14 +16,12 @@
     $videoLectureElementQuery .= '?logo schema:name ?thumbnail .' . PHP_EOL;
 	$videoLectureElementQuery .= 'FILTER ( lang(?headline) = "de") }' . PHP_EOL;
 	$videoLectureElementQuery .= 'ORDER BY ?videoLecture' . PHP_EOL;
-
     ?>
-
-
-        <?=
-        # $this->querylist($videoLectureElementQuery, 'vidp/types/videoLectureElement.phtml', array(), array('prefix' => '<li>', 'suffix' => '</li>'))
-        $this->querylist($videoLectureElementQuery, 'vidp/types/videoLectureList/videoLectureElement.phtml', array())
-        ?>
+    
+    <?=
+    # $this->querylist($videoLectureElementQuery, 'vidp/types/videoLectureElement.phtml', array(), array('prefix' => '<li>', 'suffix' => '</li>'))
+    $this->querylist($videoLectureElementQuery, 'vidp/types/videoLectureList/videoLectureElement.phtml', array())
+    ?>
 
 
 </div>
