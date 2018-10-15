@@ -29,17 +29,17 @@
             }
             ?>
 
-            <table>
+            <table class="table">
                 <tr>
                     <td rowspan="2" width="20%" height="80">
                         <a href="<?= htmlentities($url) ?>"><?php echo "<img src='http://fbwbmakewiki2.th-brandenburg.de/OntoWiki/extensions/site/sites/vidp/img/$this->thumbnail' class='img-responsive' width='200' height='150'>" ?></a>
                     </td>
-                    <td width="50%" height="40">
+                    <td width="40%" height="40">
                         <font size="4">
                             <a href="<?= htmlentities($url) ?>"><b><?= $this->label ?></b></a>
                         </font>
                     </td>
-                    <td align="right">
+                    <td align="right" width="30%">
                         <?php
                         echo "Sprache: ".$this->language." | ";
                         echo sizeof($result);
@@ -54,7 +54,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td valign="top" colspan="2">
+                    <td valign="top" colspan="2" width="70%">
                         <?=
                         strstr($this->description, ". ", true);
                         echo ". ";
