@@ -60,7 +60,7 @@
     $result = explode( '|', $result);
     $result = substr($result[1], 0, 10);
     $time = date_create($result);
-    $time = date_format($time, "M. Y");
+
     ?>
 
     <?= $this->querylist($videoLectureQuery, 'vidp/types/videoLecture/videoInfo.phtml', array('time' => $time)) ?>

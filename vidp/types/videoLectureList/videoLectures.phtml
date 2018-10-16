@@ -7,10 +7,11 @@
     $videoLectureElementQuery = 'PREFIX vidp: <https://bmake.th-brandenburg.de/vidp#>' . PHP_EOL;
     $videoLectureElementQuery .= 'PREFIX schema: <https://schema.org/>' . PHP_EOL;
     $videoLectureElementQuery .= 'PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>' . PHP_EOL;
-	$videoLectureElementQuery .= 'SELECT ?videoLecture ?headline ?thumbnail ?label ?description' . PHP_EOL;
+	$videoLectureElementQuery .= 'SELECT ?videoLecture ?headline ?thumbnail ?label ?description ?language' . PHP_EOL;
 	$videoLectureElementQuery .= 'WHERE { ?videoLecture a vidp:VideoLecture ;' . PHP_EOL;
     $videoLectureElementQuery .= 'schema:description ?description ;' . PHP_EOL;
     $videoLectureElementQuery .= 'schema:thumbnail ?logo ;' . PHP_EOL;
+    $videoLectureElementQuery .= 'schema:inLanguage ?language ;' . PHP_EOL;
     $videoLectureElementQuery .= 'rdfs:label ?label ;' . PHP_EOL;
 	$videoLectureElementQuery .= 'schema:headline ?headline .' . PHP_EOL;
     $videoLectureElementQuery .= '?logo schema:name ?thumbnail .' . PHP_EOL;

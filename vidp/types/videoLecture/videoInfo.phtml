@@ -5,7 +5,11 @@
             <tr>
                 <td>
                     <?php
-                    echo "<h4>" . $this->headline . "<span style='font-size: 70%;'>".str_repeat('&nbsp;', 10)."erstellt im ".$this->time."</span></h4>";
+                    $months = array("01"=>"Jan. ", "02"=>"Feb. ", "03"=>"M&auml;rz ", "04"=>"Apr. ", "05"=>"Mai ", "06"=>"Jun. ", "07"=>"Jul. ", "08"=>"Aug. ", "09"=>"Sep. ", "10"=>"Okt. ", "11"=>"Nov. ", "12"=>"Dez. ");
+                    $month = date_format($this->time, "m");
+                    $month = $months[$month];
+                    $year = date_format($this->time, "Y");
+                    echo "<h4>" . $this->headline . "<span style='font-size: 70%;'>".str_repeat('&nbsp;', 10)."erstellt im ".$month.$year."</span></h4>";
                     ?>
                 </td>
                 <td width="16%" align="center">
