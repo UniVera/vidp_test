@@ -11,15 +11,19 @@
             $videoLectureDurationQuery = 'PREFIX vidp: <https://bmake.th-brandenburg.de/vidp#>' . PHP_EOL;
             $videoLectureDurationQuery .= 'PREFIX schema: <https://schema.org/>' . PHP_EOL;
             $videoLectureDurationQuery .= 'PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>' . PHP_EOL;
-            $videoLectureDurationQuery .= 'SELECT ?durationclips' . PHP_EOL;
+            $videoLectureDurationQuery .= 'SELECT ?durationclips ?contributorname ?creatorname' . PHP_EOL;
             $videoLectureDurationQuery .= 'WHERE { ?clips a vidp:DoubleClip;' . PHP_EOL;
             $videoLectureDurationQuery .= 'schema:isPartOf <';
             $videoLectureDurationQuery .= $this->videoLecture;
-            $videoLectureDurationQuery .= '>; schema:duration	?durationclips. }' . PHP_EOL;
+            $videoLectureDurationQuery .= '>; schema:duration	?durationclips; 
+                                           schema:creator ?creator. 
+                                           ?creator rdfs:label ?creatorname.
+                                           OPTIONAL { ?clips  schema:contributor  ?contributor.
+                                           ?contributor rdfs:label ?contributorname.}}' . PHP_EOL;
             ?>
 
             <?php
-            $result = $this->querylist($videoLectureDurationQuery, 'vidp/types/videoLectureList/videoDuration.phtml', array(), array('prefix' => ' '));
+            $result = $this->querylist($videoLectureDurationQuery, 'vidp/types/videoLectureList/videoDurationContributor.phtml', array('block' => 'duration'), array('prefix' => ' '));
             $result = trim($result);
             $result = array_map('intval', explode(' ', $result));
 
@@ -27,11 +31,23 @@
             foreach ($result as $item) {
                 $time = $time + $item;
             }
+
+            $contributor = $this->querylist($videoLectureDurationQuery, 'vidp/types/videoLectureList/videoDurationContributor.phtml', array('block' => 'contributor'), array('prefix' => '|'));
+            $contributor = explode('|', $contributor);
+            unset($contributor[0]);
+            $contributor = array_values(array_unique($contributor));
+
+            $lecturer = "";
+            foreach ($contributor as $item) {
+                $lecturer = $lecturer.$item.", ";
+            }
+            $lecturer = substr($lecturer,0,strlen($lecturer)-2);
+
             ?>
 
             <table class="table">
                 <tr>
-                    <td rowspan="2" width="20%" height="80">
+                    <td rowspan="3" width="20%" height="80">
                         <a href="<?= htmlentities($url) ?>"><?php echo "<img src='http://fbwbmakewiki2.th-brandenburg.de/OntoWiki/extensions/site/sites/vidp/img/$this->thumbnail' class='img-responsive' width='200' height='150'>" ?></a>
                         <!--https://drive.google.com/uc?export=view&id=14wnhck44p3Pr_vm2yLibaDoIYKKm-d64-->
                     </td>
@@ -61,6 +77,11 @@
                         echo ". ";
                         ?>
                         <a href="<?= htmlentities($url) ?>">mehr</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="top" colspan="2" width="70%">
+                        Vortragende: <?php echo $lecturer ?>
                     </td>
                 </tr>
             </table>

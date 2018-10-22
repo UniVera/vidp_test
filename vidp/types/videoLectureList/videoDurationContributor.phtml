@@ -1,0 +1,21 @@
+<?php
+    $lastcontributor = "";
+    if ($this->block == 'duration') {
+        
+        $d = new DateInterval($this->durationclips);
+        $minutes = $d->format('%i');
+        $seconds = $d->format('%s');
+        $time = $minutes * 60 + $seconds;
+
+        echo $time;
+
+    } else if ($this->block == 'contributor') {
+
+        if ($this->contributorname) {
+            echo $this->contributorname;
+        } else {
+            echo $this->creatorname;
+        }
+    }
+
+?>
