@@ -39,7 +39,7 @@
 
             $lecturer = "";
             foreach ($contributor as $item) {
-                $lecturer = $lecturer.$item.", ";
+                $lecturer = $lecturer.$item."; ";
             }
             $lecturer = substr($lecturer,0,strlen($lecturer)-2);
 
@@ -81,7 +81,9 @@
                 </tr>
                 <tr>
                     <td valign="top" colspan="2" width="70%">
-                        Vortragende: <?php echo $lecturer ?>
+                        <i>
+                            <?php echo $lecturer ?>
+                        </i>
                     </td>
                 </tr>
             </table>
