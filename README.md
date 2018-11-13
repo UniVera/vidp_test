@@ -40,3 +40,11 @@ Der Code muss im entsprechenden Site Model implementiert werden. Hier: ``` /var/
 </ul>
 ```
 Im oberen Teil erfolgt die Einbindung des entsprechenden Models, Schemas usw. Im unteren Teil erfolgt die eigentliche Abfrage auf Basis von SPARQL.
+
+### User Interface
+<img src="https://drive.google.com/uc?export=view&amp;id=1Hua3iGofVYl9avOZXnQTIfJnMiTcEwnp" class="img-responsive">
+Bild 1: Übersicht über alle Elemente
+
+---
+<img src="https://drive.google.com/uc?export=view&amp;id=1BUUaNiQC0jGjXy7iB9uCJRGCSeyj6G08" class="img-responsive">
+Bild 2: Ansicht eines einzelnen Elements
