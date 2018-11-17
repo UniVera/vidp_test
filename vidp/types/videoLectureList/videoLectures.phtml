@@ -2,23 +2,65 @@
 <div class="page-header">
     <h2><?php echo $this->title ?></h2>
 </div>
+
+<button type="button" class="btn btn-default" data-toggle="collapse" data-target="#demo">Suche</button>
+<div id="demo" class="collapse jumbotron">
+    <form method="GET">
+        <table class="responsive">
+            <thead>
+                <tr>
+                    <th class="text-left">Sprache</th>
+                </tr>
+            </thead>
+            <tr>
+                <td>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="en"
+                               name="checkEn" <?php echo($_GET["checkEn"] == "en" ? "checked" : "") ?>>
+                        <label class="form-check-label" for="checkEn">
+                            Englisch
+                        </label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="de"
+                               name="checkDe" <?php echo($_GET["checkDe"] == "de" ? "checked" : "") ?>>
+                        <label class="form-check-label" for="checkDe">
+                            Deutsch
+                        </label>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <button type="submit" class="btn btn-primary">Filtern</button>
+    </form>
+</div>
 <div class="jumbotron">
     <?php
     $videoLectureElementQuery = 'PREFIX vidp: <https://bmake.th-brandenburg.de/vidp#>' . PHP_EOL;
     $videoLectureElementQuery .= 'PREFIX schema: <https://schema.org/>' . PHP_EOL;
     $videoLectureElementQuery .= 'PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>' . PHP_EOL;
-	$videoLectureElementQuery .= 'SELECT ?videoLecture ?headline ?thumbnail ?label ?description ?language' . PHP_EOL;
-	$videoLectureElementQuery .= 'WHERE { ?videoLecture a vidp:VideoLecture ;' . PHP_EOL;
+    $videoLectureElementQuery .= 'SELECT ?videoLecture ?headline ?thumbnail ?label ?description ?language' . PHP_EOL;
+    $videoLectureElementQuery .= 'WHERE { ?videoLecture a vidp:VideoLecture ;' . PHP_EOL;
     $videoLectureElementQuery .= 'schema:description ?description ;' . PHP_EOL;
     $videoLectureElementQuery .= 'schema:thumbnail ?logo ;' . PHP_EOL;
     $videoLectureElementQuery .= 'schema:inLanguage ?language ;' . PHP_EOL;
     $videoLectureElementQuery .= 'rdfs:label ?label ;' . PHP_EOL;
-	$videoLectureElementQuery .= 'schema:headline ?headline .' . PHP_EOL;
+    $videoLectureElementQuery .= 'schema:headline ?headline .' . PHP_EOL;
     $videoLectureElementQuery .= '?logo schema:name ?thumbnail .' . PHP_EOL;
-	$videoLectureElementQuery .= 'FILTER ( lang(?headline) = "de") }' . PHP_EOL;
-	$videoLectureElementQuery .= 'ORDER BY ?videoLecture' . PHP_EOL;
+    $videoLectureElementQuery .= 'FILTER ( lang(?headline) = "de" ) .' . PHP_EOL;
+    if ($_GET["checkEn"] != "" || $_GET["checkDe"] != ""){
+        $videoLectureElementQuery .= 'FILTER ( (?language ="' . $_GET["checkEn"] . '") || (?language ="' . $_GET["checkDe"] . '")) }' . PHP_EOL;
+    }
+    else {
+        $videoLectureElementQuery .= '}';
+    }
+    $videoLectureElementQuery .= 'ORDER BY ?videoLecture' . PHP_EOL;
     ?>
-    
+
     <?=
     # $this->querylist($videoLectureElementQuery, 'vidp/types/videoLectureElement.phtml', array(), array('prefix' => '<li>', 'suffix' => '</li>'))
     $this->querylist($videoLectureElementQuery, 'vidp/types/videoLectureList/videoLectureElement.phtml', array())
