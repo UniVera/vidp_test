@@ -3,14 +3,31 @@
     <h2><?php echo $this->title ?></h2>
 </div>
 
-<button type="button" class="btn btn-default" data-toggle="collapse" data-target="#demo">Suche</button>
-<div id="demo" class="collapse jumbotron">
+<button type="button" id="filterButton" class="btn btn-default btn-lg btn-block" aria-pressed="true"
+        data-toggle="collapse"
+        data-target="#filter" style="margin-bottom: 30px">
+    Filtern
+</button>
+
+<script language="javascript" type="text/javascript">
+    $('#filterButton').on('click', function (e) {
+        $('#filterButton').each(function () {
+            if ($(this).hasClass('active')) {
+                $(this).removeClass('active');
+            } else {
+                $(this).addClass('active');
+            }
+        })
+    });
+</script>
+
+<div id="filter" class="collapse jumbotron">
     <form method="GET">
-        <table class="responsive">
+        <table class="table responsive">
             <thead>
-                <tr>
-                    <th class="text-left">Sprache</th>
-                </tr>
+            <tr>
+                <th class="text-left">Sprache</th>
+            </tr>
             </thead>
             <tr>
                 <td>
@@ -35,9 +52,10 @@
                 </td>
             </tr>
         </table>
-        <button type="submit" class="btn btn-primary">Filtern</button>
+        <button type="submit" class="btn btn-primary">Filter anwenden</button>
     </form>
 </div>
+
 <div class="jumbotron">
     <?php
     $videoLectureElementQuery = 'PREFIX vidp: <https://bmake.th-brandenburg.de/vidp#>' . PHP_EOL;
@@ -52,12 +70,11 @@
     $videoLectureElementQuery .= 'schema:headline ?headline .' . PHP_EOL;
     $videoLectureElementQuery .= '?logo schema:name ?thumbnail .' . PHP_EOL;
     $videoLectureElementQuery .= 'FILTER ( lang(?headline) = "de" ) .' . PHP_EOL;
-    if ($_GET["checkEn"] != "" || $_GET["checkDe"] != ""){
-        $videoLectureElementQuery .= 'FILTER ( (?language ="' . $_GET["checkEn"] . '") || (?language ="' . $_GET["checkDe"] . '")) }' . PHP_EOL;
+    if ($_GET["checkEn"] != "" || $_GET["checkDe"] != "") {
+        $videoLectureElementQuery .= 'FILTER ( (?language ="' . $_GET["checkEn"] . '") 
+            || (?language ="' . $_GET["checkDe"] . '") ) .' . PHP_EOL;
     }
-    else {
-        $videoLectureElementQuery .= '}';
-    }
+    $videoLectureElementQuery .= '}' . PHP_EOL;
     $videoLectureElementQuery .= 'ORDER BY ?videoLecture' . PHP_EOL;
     ?>
 
