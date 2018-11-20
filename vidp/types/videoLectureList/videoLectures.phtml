@@ -9,6 +9,7 @@
     Filtern
 </button>
 
+<!-- Button "Filtern" ein-/ausblenden -->
 <script language="javascript" type="text/javascript">
     $('#filterButton').on('click', function (e) {
         $('#filterButton').each(function () {
@@ -70,7 +71,7 @@
     $videoLectureElementQuery .= 'schema:headline ?headline .' . PHP_EOL;
     $videoLectureElementQuery .= '?logo schema:name ?thumbnail .' . PHP_EOL;
     $videoLectureElementQuery .= 'FILTER ( lang(?headline) = "de" ) .' . PHP_EOL;
-    if ($_GET["checkEn"] != "" || $_GET["checkDe"] != "") {
+    if ($_GET["checkEn"] != "" || $_GET["checkDe"] != "") {  //Query für Filterfunktion "Sprache"
         $videoLectureElementQuery .= 'FILTER ( (?language ="' . $_GET["checkEn"] . '") 
             || (?language ="' . $_GET["checkDe"] . '") ) .' . PHP_EOL;
     }
