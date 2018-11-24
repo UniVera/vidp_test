@@ -1,9 +1,12 @@
 <!-- Datei zur Darstellung aller Videovorlesungen als Liste -->
+<?php
+session_start();
+?>
 <div class="page-header">
     <h2><?php echo $this->title ?></h2>
 </div>
 
-<button type="button" id="filterButton" class="btn btn-default btn-lg btn-block" aria-pressed="true"
+<button type="button" id="filterButton" class="btn btn-success btn-lg btn-block" aria-pressed="true"
         data-toggle="collapse"
         data-target="#filter" style="margin-bottom: 30px">
     Filtern
@@ -22,39 +25,104 @@
     });
 </script>
 
-<div id="filter" class="collapse jumbotron">
-    <form method="GET">
-        <table class="table responsive">
-            <thead>
-            <tr>
-                <th class="text-left">Sprache</th>
-            </tr>
-            </thead>
-            <tr>
-                <td>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="en"
-                               name="checkEn" <?php echo($_GET["checkEn"] == "en" ? "checked" : "") ?>>
-                        <label class="form-check-label" for="checkEn">
-                            Englisch
-                        </label>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="de"
-                               name="checkDe" <?php echo($_GET["checkDe"] == "de" ? "checked" : "") ?>>
-                        <label class="form-check-label" for="checkDe">
-                            Deutsch
-                        </label>
-                    </div>
-                </td>
-            </tr>
-        </table>
-        <button type="submit" class="btn btn-primary">Filter anwenden</button>
-    </form>
+
+<?php
+
+$lecturerQuery = "PREFIX ns4: <http://purl.org/vocommons/voaf#>" . PHP_EOL;
+$lecturerQuery .= "PREFIX ns3: <http://ns.ontowiki.net/SysOnt/Site/>" . PHP_EOL;
+$lecturerQuery .= "PREFIX ns2: <https://bmake.th-brandenburg.de/vidp#>" . PHP_EOL;
+$lecturerQuery .= "PREFIX ns1: <https://schema.org/>" . PHP_EOL;
+$lecturerQuery .= "PREFIX ns0: <http://rdfs.org/ns/void#>" . PHP_EOL;
+$lecturerQuery .= "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>" . PHP_EOL;
+$lecturerQuery .= "PREFIX owl: <http://www.w3.org/2002/07/owl#>" . PHP_EOL;
+$lecturerQuery .= "PREFIX foaf: <http://xmlns.com/foaf/0.1/>" . PHP_EOL;
+$lecturerQuery .= "PREFIX sysont: <http://ns.ontowiki.net/SysOnt/>" . PHP_EOL;
+$lecturerQuery .= "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>" . PHP_EOL;
+$lecturerQuery .= "SELECT DISTINCT ?lecturer" . PHP_EOL;
+$lecturerQuery .= "WHERE {" . PHP_EOL;
+
+$lecturerQuery .= "?lecturerURI a ns2:Lecturer;" . PHP_EOL;
+$lecturerQuery .= "rdfs:label ?lecturer." . PHP_EOL;
+$lecturerQuery .= "}" . PHP_EOL;
+
+?>
+
+<?php
+
+$_SESSION['lecturers'] = array();
+$this->querylist($lecturerQuery, 'vidp/types/videoLectureList/lecturerLabel.phtml');
+
+?>
+
+
+<div id="filter" class="collapse jumbotron container-fluid">
+
+    <div class="row">
+        <form method="GET">
+            <div class="col-sm-6">
+                <table class="table responsive">
+                    <thead>
+                    <tr>
+                        <th class="text-left">Sprache</th>
+                    </tr>
+                    </thead>
+                    <tr>
+                        <td>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="en"
+                                       name="checkEn" <?php echo($_GET["checkEn"] == "en" ? "checked" : "") ?>>
+                                <label class="form-check-label" for="checkEn">
+                                    Englisch
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="de"
+                                       name="checkDe" <?php echo($_GET["checkDe"] == "de" ? "checked" : "") ?>>
+                                <label class="form-check-label" for="checkDe">
+                                    Deutsch
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-sm-6">
+                <table class="table responsive">
+                    <thead>
+                    <tr>
+                        <th class="text-left">Dozent</th>
+                    </tr>
+                    </thead>
+                    <?php
+                    for ($i = 0; $i < count($_SESSION['lecturers']); $i++) {
+                        $currentLecturer = $_SESSION['lecturers'][$i];
+                        $currentCheckBoxName = "check" . $i;
+                        $currentCheckBox = '<tr>';
+                        $currentCheckBox .= '<td>';
+                        $currentCheckBox .= '<div class="form-check">';
+                        $currentCheckBox .= '<input class="form-check-input" type="checkbox" value="' . $currentLecturer . '"';
+                        $currentCheckBox .= 'name="' . $currentCheckBoxName . '"' . ($_GET[$currentCheckBoxName] == $currentLecturer ? "checked" : "") . '>';
+                        $currentCheckBox .= '<label class="form-check-label" for=' . $currentCheckBoxName . '>';
+                        $currentCheckBox .= '&nbsp;' . $currentLecturer;
+                        $currentCheckBox .= '</label>';
+                        $currentCheckBox .= '</div>';
+                        $currentCheckBox .= '</td>';
+                        $currentCheckBox .= '</tr>';
+                        echo $currentCheckBox;
+                    }
+                    ?>
+
+                </table>
+            </div>
+            <div class="row" align="center">
+                    <button type="submit" class="btn btn-primary">Filter anwenden</button>
+            </div>
+        </form>
+    </div>
 </div>
 
 <div class="jumbotron">
@@ -81,7 +149,7 @@
 
     <?=
     # $this->querylist($videoLectureElementQuery, 'vidp/types/videoLectureElement.phtml', array(), array('prefix' => '<li>', 'suffix' => '</li>'))
-    $this->querylist($videoLectureElementQuery, 'vidp/types/videoLectureList/videoLectureElement.phtml', array())
+    $this->querylist($videoLectureElementQuery, 'vidp/types/videoLectureList/videoLectureElement.phtml', array());
     ?>
 
 
