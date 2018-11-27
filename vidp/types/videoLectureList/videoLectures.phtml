@@ -94,7 +94,7 @@ $this->querylist($lecturerQuery, 'vidp/types/videoLectureList/lecturerLabel.phtm
                 <table class="table responsive">
                     <thead>
                     <tr>
-                        <th class="text-left">Dozent</th>
+                        <th class="text-left">DozentIn</th>
                     </tr>
                     </thead>
                     <?php
@@ -137,7 +137,7 @@ $this->querylist($lecturerQuery, 'vidp/types/videoLectureList/lecturerLabel.phtm
     $videoLectureElementQuery .= 'schema:inLanguage ?language ;' . PHP_EOL;
     $videoLectureElementQuery .= 'rdfs:label ?label ;' . PHP_EOL;
     $videoLectureElementQuery .= 'schema:headline ?headline .' . PHP_EOL;
-    $videoLectureElementQuery .= '?logo schema:name ?thumbnail .' . PHP_EOL;
+    $videoLectureElementQuery .= '?logo schema:identifier ?thumbnail .' . PHP_EOL;
     $videoLectureElementQuery .= 'FILTER ( lang(?headline) = "de" ) .' . PHP_EOL;
     $videoLectureElementQuery .= '?modul schema:isPartOf ?videoLecture .' . PHP_EOL;
 
