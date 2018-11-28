@@ -1,0 +1,7 @@
+<?php
+if ($this->lecturer) {
+    array_push($_SESSION['lecturers'], $this->lecturer);
+} elseif ($this->module) {
+    array_push($_SESSION['modules'], $this->module);
+}
+?>
