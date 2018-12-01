@@ -1,4 +1,7 @@
 <!-- Datei zur Darstellung aller Videovorlesungen als Liste -->
+<head>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+</head>
 <?php
 session_start();
 ?>
@@ -8,7 +11,7 @@ session_start();
 
 <button type="button" id="filterButton" class="btn btn-success btn-lg btn-block" aria-pressed="true"
         data-toggle="collapse"
-        data-target="#filter" style="margin-bottom: 30px">
+        data-target="#filter" style="margin-bottom: 30px"> <i class="fas fa-filter"></i> &nbsp;
     Filtern
 </button>
 
@@ -92,7 +95,7 @@ $this->querylist($moduleQuery, 'vidp/types/videoLectureList/filterNames.phtml');
 
                     <thead>
                     <tr>
-                        <th class="text-left">Sprache</th>
+                        <th class="text-left"><i class="fas fa-globe-americas"></i> &nbsp; Sprache</th>
                     </tr>
                     </thead>
                     <tr>
@@ -123,7 +126,7 @@ $this->querylist($moduleQuery, 'vidp/types/videoLectureList/filterNames.phtml');
                 <table class="table responsive">
                     <thead>
                     <tr>
-                        <th class="text-left">DozentIn</th>
+                        <th class="text-left"><i class="fas fa-user"></i> &nbsp; Dozent(in)</th>
                     </tr>
                     </thead>
                     <?php
@@ -152,7 +155,7 @@ $this->querylist($moduleQuery, 'vidp/types/videoLectureList/filterNames.phtml');
                 <table class="table responsive">
                     <thead>
                     <tr>
-                        <th class="text-left">Modul</th>
+                        <th class="text-left"><i class="fas fa-book"></i> &nbsp; Modul</th>
                     </tr>
                     </thead>
                     <tr>
@@ -169,10 +172,15 @@ $this->querylist($moduleQuery, 'vidp/types/videoLectureList/filterNames.phtml');
                             </select>
                         </td>
                     </tr>
+                    <tr>
+                        <td>
+                        <div class="btn-group" role="group">
+                            <button type="submit" class="btn btn-success"><i class="fas fa-check"></i>&nbsp; Anwenden</button>
+                            <button type="reset" class="btn btn-reset" onclick="location.href='/OntoWiki/fbwTube/VideoVorlesungen.html'"><i class="fas fa-undo"></i>&nbsp; Zurücksetzen</button>
+                        </div>
+                        </td>
+                    </tr>
                 </table>
-            </div>
-            <div class="row" align="center">
-                <button type="submit" class="btn btn-primary">Filter anwenden</button>
             </div>
         </form>
     </div>
@@ -213,7 +221,7 @@ $this->querylist($moduleQuery, 'vidp/types/videoLectureList/filterNames.phtml');
        	 ?doubleClip schema:creator ?creator.
          ?creator rdfs:label ?nameCreator.
          FILTER (';
-        #Durch diese for Schleife sichergestellt, dass mehrere Dozenten ausgewählt werden können
+        #Durch diese for Schleife wird sichergestellt, dass mehrere Dozenten ausgewählt werden können
         for ($i = 0; $i < $lecturerCount; $i++) {
             $videoLectureElementQuery .= 'contains( ?nameCreator, "' . $_GET["checkLecturer" . ($i + 1)] . '" )';
             if ($i < $lecturerCount - 1) {
@@ -226,7 +234,7 @@ $this->querylist($moduleQuery, 'vidp/types/videoLectureList/filterNames.phtml');
          ?doubleClip schema:contributor ?contributor. 
          ?contributor rdfs:label ?nameContributor. 
          FILTER (';
-        #Durch diese for Schleife sichergestellt, dass mehrere Dozenten ausgewählt werden können
+        #Durch diese for Schleife wird sichergestellt, dass mehrere Dozenten ausgewählt werden können
         for ($i = 0; $i < $lecturerCount; $i++) {
             $videoLectureElementQuery .= 'contains( ?nameContributor, "' . $_GET["checkLecturer" . ($i + 1)] . '" )';
             if ($i < $lecturerCount - 1) {
@@ -241,7 +249,7 @@ $this->querylist($moduleQuery, 'vidp/types/videoLectureList/filterNames.phtml');
         $videoLectureElementQuery .= 'FILTER ( (?language ="' . $_GET["checkEn"] . '") 
             || (?language ="' . $_GET["checkDe"] . '") ) .' . PHP_EOL;
     }
-    if ($_GET['module'] != "") {
+    if ($_GET['module'] != "") { //Query für Filterfunktion Modul
         $videoLectureElementQuery .= 'FILTER (contains(?modul_label, "' . $_GET['module'] . '"))';
     }
     $videoLectureElementQuery .= '}' . PHP_EOL;
@@ -254,7 +262,7 @@ $this->querylist($moduleQuery, 'vidp/types/videoLectureList/filterNames.phtml');
     #Hier wird kontrolliert, ob die angewendte Query mindestens eine Vorlesung zurückgibt. Falls nicht, wird eine Nachricht angezeigt.
     $result = $this->querylist($videoLectureElementQuery, 'vidp/types/videoLectureList/videoLectureElement.phtml', array());
     if ($result == "") {
-        echo "<h3>Es gibt keine Videovorlesung für die von Ihnen ausgewählten Filtern.</h3>";
+        echo "<h3>Es gibt keine Videovorlesung für die von Ihnen ausgewählten Filter.</h3>";
     }
     ?>
 
