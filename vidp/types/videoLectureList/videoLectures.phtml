@@ -134,8 +134,7 @@ $this->querylist($studyProgramQuery, 'vidp/types/videoLectureList/filterNames.ph
                         <td>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" value="en" onclick="toggle(this)"
-                                       id="lang"
-                                       name="lang1" <?php echo($_GET["lang1"] == "en" ? "checked" : "") ?>>
+                                       id="lang1" name="lang1" <?php echo($_GET["lang1"] == "en" ? "checked" : "") ?>>
                                 <label class="form-check-label" for="lang1">
                                     Englisch
                                 </label>
@@ -146,8 +145,7 @@ $this->querylist($studyProgramQuery, 'vidp/types/videoLectureList/filterNames.ph
                         <td>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" value="de" onclick="toggle(this)"
-                                       id="lang"
-                                       name="lang2" <?php echo($_GET["lang2"] == "de" ? "checked" : "") ?>>
+                                       id="lang2" name="lang2" <?php echo($_GET["lang2"] == "de" ? "checked" : "") ?>>
                                 <label class="form-check-label" for="lang2">
                                     Deutsch
                                 </label>
@@ -233,9 +231,9 @@ $this->querylist($studyProgramQuery, 'vidp/types/videoLectureList/filterNames.ph
         <div class="row" align="center">
             <div class="btn-group" role="group">
                 <button type="submit" class="btn btn-success"><i class="fas fa-check"></i>&nbsp; Anwenden</button>
-                <!-- 2 ist hier die Anzahl der Dropboxes. Button wird deaktiviert, wenn nichts ausgewählt wurde  -->
+                <!-- Button wird deaktiviert, wenn nichts ausgewählt wurde, also wenn $_GET leer ist.  -->
                 <button type="reset" class="btn btn-danger"
-                        onclick="location.href='/OntoWiki/fbwTube/VideoVorlesungen.html'" <?php if (!$_GET || (count($_GET) == 2)) echo 'disabled="disabled"' ?>>
+                        onclick="location.href='/OntoWiki/fbwTube/VideoVorlesungen.html'" <?php if (!$_GET) echo 'disabled="disabled"' ?>>
                     <i class="fas fa-undo"></i>&nbsp; Zurücksetzen
                 </button>
             </div>
@@ -307,13 +305,12 @@ $this->querylist($studyProgramQuery, 'vidp/types/videoLectureList/filterNames.ph
         $videoLectureElementQuery .= 'FILTER ( (?language ="' . $_GET["lang1"] . '") 
             || (?language ="' . $_GET["lang2"] . '") ) .';
     }
-    if ($_GET['studyProgram'] != "") {
-        $videoLectureElementQuery .= 'FILTER (contains(?labelStudyProgram, "' . $_GET['studyProgram'] . '"))';
-    }
     if ($_GET['module'] != "") {
         $videoLectureElementQuery .= 'FILTER (contains(?modul_label, "' . $_GET['module'] . '"))';
     }
-
+    if ($_GET['studyProgram'] != "") {
+        $videoLectureElementQuery .= 'FILTER (contains(?labelStudyProgram, "' . $_GET['studyProgram'] . '"))';
+    }
     $videoLectureElementQuery .= '} ORDER BY ?videoLecture';
     ?>
 
@@ -329,7 +326,6 @@ $this->querylist($studyProgramQuery, 'vidp/types/videoLectureList/filterNames.ph
 
 
     <script> toggleAllCheckboxesToIndeterminate(); </script>
-    "
 
 
 </div>
