@@ -1,6 +1,8 @@
 <!-- Datei zur Darstellung aller Videovorlesungen als Liste -->
 <head>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+          integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <script type="text/javascript" src="<?= $this->baseUri ?>/js/indeterminate.js"></script>
 </head>
 <?php
 session_start();
@@ -11,12 +13,11 @@ session_start();
 
 <button type="button" id="filterButton" class="btn btn-success btn-lg btn-block" aria-pressed="true"
         data-toggle="collapse"
-        data-target="#filter" style="margin-bottom: 30px"> <i class="fas fa-filter"></i> &nbsp;
+        data-target="#filter" style="margin-bottom: 30px"><i class="fas fa-filter"></i> &nbsp;
     Filtern
 </button>
-
 <!-- Button "Filtern" ein-/ausblenden -->
-<script language="javascript" type="text/javascript">
+<script language="JavaScript" type="text/javascript">
     $('#filterButton').on('click', function (e) {
         $('#filterButton').each(function () {
             if ($(this).hasClass('active')) {
@@ -30,22 +31,22 @@ session_start();
 
 <?php
 
-$lecturerQuery = "PREFIX ns4: <http://purl.org/vocommons/voaf#>" . PHP_EOL;
-$lecturerQuery .= "PREFIX ns3: <http://ns.ontowiki.net/SysOnt/Site/>" . PHP_EOL;
-$lecturerQuery .= "PREFIX ns2: <https://bmake.th-brandenburg.de/vidp#>" . PHP_EOL;
-$lecturerQuery .= "PREFIX ns1: <https://schema.org/>" . PHP_EOL;
-$lecturerQuery .= "PREFIX ns0: <http://rdfs.org/ns/void#>" . PHP_EOL;
-$lecturerQuery .= "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>" . PHP_EOL;
-$lecturerQuery .= "PREFIX owl: <http://www.w3.org/2002/07/owl#>" . PHP_EOL;
-$lecturerQuery .= "PREFIX foaf: <http://xmlns.com/foaf/0.1/>" . PHP_EOL;
-$lecturerQuery .= "PREFIX sysont: <http://ns.ontowiki.net/SysOnt/>" . PHP_EOL;
-$lecturerQuery .= "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>" . PHP_EOL;
-$lecturerQuery .= "SELECT DISTINCT ?lecturer" . PHP_EOL;
-$lecturerQuery .= "WHERE {" . PHP_EOL;
-
-$lecturerQuery .= "?lecturerURI a ns2:Lecturer;" . PHP_EOL;
-$lecturerQuery .= "rdfs:label ?lecturer." . PHP_EOL;
-$lecturerQuery .= "}" . PHP_EOL;
+$lecturerQuery = "PREFIX ns4: <http://purl.org/vocommons/voaf#>
+                    PREFIX ns3: <http://ns.ontowiki.net/SysOnt/Site/>
+                    PREFIX ns2: <https://bmake.th-brandenburg.de/vidp#>
+                    PREFIX ns1: <https://schema.org/>
+                    PREFIX ns0: <http://rdfs.org/ns/void#>
+                    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+                    PREFIX owl: <http://www.w3.org/2002/07/owl#>
+                    PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+                    PREFIX sysont: <http://ns.ontowiki.net/SysOnt/>
+                    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+                    SELECT DISTINCT ?lecturer
+                    WHERE {
+                    
+                    ?lecturerURI a ns2:Lecturer;
+                    rdfs:label ?lecturer.
+                    }";
 
 ?>
 
@@ -87,12 +88,43 @@ $this->querylist($moduleQuery, 'vidp/types/videoLectureList/filterNames.phtml');
 
 ?>
 
+
+<?php
+$studyProgramQuery = "PREFIX vs: <http://www.w3.org/2003/06/sw-vocab-status/ns#>
+                        PREFIX ns4: <http://purl.org/vocommons/voaf#>
+                        PREFIX ns3: <http://ns.ontowiki.net/SysOnt/Site/>
+                        PREFIX ns2: <https://bmake.th-brandenburg.de/vidp#>
+                        PREFIX ns1: <https://schema.org/>
+                        PREFIX vide: <https://bmake.th-brandenburg.de/vide#>
+                        PREFIX ns0: <http://rdfs.org/ns/void#>
+                        PREFIX vidp: <https://bmake.th-brandenburg.de/vidp#>
+                        PREFIX wd: <http://www.wikidata.org/entity/>
+                        PREFIX schema: <https://schema.org/>
+                        PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+                        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+                        PREFIX owl: <http://www.w3.org/2002/07/owl#>
+                        PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+                        PREFIX sysont: <http://ns.ontowiki.net/SysOnt/>
+                        PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+                        SELECT DISTINCT ?studyProgram
+                        WHERE {
+                        ?studyProgramUri a ns2:StudyProgram;
+                        rdfs:label ?studyProgram.
+                        }";
+?>
+
+<?php
+
+$_SESSION['studyPrograms'] = array();
+$this->querylist($studyProgramQuery, 'vidp/types/videoLectureList/filterNames.phtml');
+
+?>
+
 <div id="filter" class="collapse jumbotron container-fluid">
-    <div class="row">
-        <form method="GET" id="filter_form">
+    <form method="GET" id="filter_form">
+        <div class="row">
             <div class="col-md-4 col-sm-6">
                 <table class="table responsive">
-
                     <thead>
                     <tr>
                         <th class="text-left"><i class="fas fa-globe-americas"></i> &nbsp; Sprache</th>
@@ -101,9 +133,10 @@ $this->querylist($moduleQuery, 'vidp/types/videoLectureList/filterNames.phtml');
                     <tr>
                         <td>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="en"
-                                       name="checkEn" <?php echo($_GET["checkEn"] == "en" ? "checked" : "") ?>>
-                                <label class="form-check-label" for="checkEn">
+                                <input class="form-check-input" type="checkbox" value="en" onclick="toggle(this)"
+                                       id="lang"
+                                       name="lang1" <?php echo($_GET["lang1"] == "en" ? "checked" : "") ?>>
+                                <label class="form-check-label" for="lang1">
                                     Englisch
                                 </label>
                             </div>
@@ -112,9 +145,10 @@ $this->querylist($moduleQuery, 'vidp/types/videoLectureList/filterNames.phtml');
                     <tr>
                         <td>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="de"
-                                       name="checkDe" <?php echo($_GET["checkDe"] == "de" ? "checked" : "") ?>>
-                                <label class="form-check-label" for="checkDe">
+                                <input class="form-check-input" type="checkbox" value="de" onclick="toggle(this)"
+                                       id="lang"
+                                       name="lang2" <?php echo($_GET["lang2"] == "de" ? "checked" : "") ?>>
+                                <label class="form-check-label" for="lang2">
                                     Deutsch
                                 </label>
                             </div>
@@ -132,11 +166,11 @@ $this->querylist($moduleQuery, 'vidp/types/videoLectureList/filterNames.phtml');
                     <?php
                     for ($i = 0; $i < count($_SESSION['lecturers']); $i++) {
                         $currentLecturer = $_SESSION['lecturers'][$i];
-                        $currentCheckBoxName = "checkLecturer" . ($i + 1);
+                        $currentCheckBoxName = "lecturer" . ($i + 1);
                         $currentCheckBox = '<tr>';
                         $currentCheckBox .= '<td>';
                         $currentCheckBox .= '<div class="form-check">';
-                        $currentCheckBox .= '<input class="form-check-input" type="checkbox" value="' . $currentLecturer . '"';
+                        $currentCheckBox .= '<input class="form-check-input" type="checkbox" value="' . $currentLecturer . '" onclick="toggle(this)" id="' . $currentCheckBoxName . '"';
                         $currentCheckBox .= 'name="' . $currentCheckBoxName . '"' . ($_GET[$currentCheckBoxName] == $currentLecturer ? "checked" : "") . '>';
                         $currentCheckBox .= '<label class="form-check-label" for=' . $currentCheckBoxName . '>';
                         $currentCheckBox .= '&nbsp;' . $currentLecturer;
@@ -172,46 +206,70 @@ $this->querylist($moduleQuery, 'vidp/types/videoLectureList/filterNames.phtml');
                             </select>
                         </td>
                     </tr>
+                </table>
+                <table class="table responsive">
+                    <thead>
+                    <tr>
+                        <th class="text-left">Studiengang</th>
+                    </tr>
+                    </thead>
                     <tr>
                         <td>
-                        <div class="btn-group" role="group">
-                            <button type="submit" class="btn btn-success"><i class="fas fa-check"></i>&nbsp; Anwenden</button>
-                            <button type="reset" class="btn btn-reset" onclick="location.href='/OntoWiki/fbwTube/VideoVorlesungen.html'"><i class="fas fa-undo"></i>&nbsp; Zurücksetzen</button>
-                        </div>
+                            <select class="form-control responsive" name="studyProgram" form="filter_form">
+                                <?php
+                                echo "<option value=''>--Bitte wählen Sie einen Studiengang aus--</option>";
+                                for ($i = 0; $i < count($_SESSION['studyPrograms']); $i++) {
+                                    $currentStudyProgram = $_SESSION['studyPrograms'][$i];
+                                    $currentOption = '<option value="' . $currentStudyProgram . '" ' . ($_GET['studyProgram'] == $currentStudyProgram ? "selected" : "") . '>' . $currentStudyProgram . '</option>';
+                                    echo $currentOption;
+                                }
+                                ?>
+                            </select>
                         </td>
                     </tr>
                 </table>
             </div>
-        </form>
-    </div>
-
+        </div>
+        <div class="row" align="center">
+            <div class="btn-group" role="group">
+                <button type="submit" class="btn btn-success"><i class="fas fa-check"></i>&nbsp; Anwenden</button>
+                <!-- 2 ist hier die Anzahl der Dropboxes. Button wird deaktiviert, wenn nichts ausgewählt wurde  -->
+                <button type="reset" class="btn btn-danger"
+                        onclick="location.href='/OntoWiki/fbwTube/VideoVorlesungen.html'" <?php if (!$_GET || (count($_GET) == 2)) echo 'disabled="disabled"' ?>>
+                    <i class="fas fa-undo"></i>&nbsp; Zurücksetzen
+                </button>
+            </div>
+        </div>
+    </form>
 </div>
 
 <div class="jumbotron">
     <?php
-    $videoLectureElementQuery = 'PREFIX vidp: <https://bmake.th-brandenburg.de/vidp#>' . PHP_EOL;
-    $videoLectureElementQuery .= 'PREFIX schema: <https://schema.org/>' . PHP_EOL;
-    $videoLectureElementQuery .= 'PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>' . PHP_EOL;
-    $videoLectureElementQuery .= 'SELECT DISTINCT ?videoLecture ?headline ?thumbnail ?label ?description ?language' . PHP_EOL;
-    $videoLectureElementQuery .= 'WHERE { ?videoLecture a vidp:VideoLecture ;' . PHP_EOL;
-    $videoLectureElementQuery .= 'schema:description ?description ;' . PHP_EOL;
-    $videoLectureElementQuery .= 'schema:thumbnail ?logo ;' . PHP_EOL;
-    $videoLectureElementQuery .= 'schema:inLanguage ?language ;' . PHP_EOL;
-    $videoLectureElementQuery .= 'rdfs:label ?label ;' . PHP_EOL;
-    $videoLectureElementQuery .= 'schema:headline ?headline .' . PHP_EOL;
-    $videoLectureElementQuery .= '?logo schema:identifier ?thumbnail .' . PHP_EOL;
-    $videoLectureElementQuery .= '?videoLecture a vidp:VideoLecture;
-                   schema:about ?modul.';
-    $videoLectureElementQuery .= '?modul a vidp:Module;
-          rdfs:label ?modul_label.';
-    $videoLectureElementQuery .= 'FILTER ( lang(?headline) = "de" ) .' . PHP_EOL;
-    $videoLectureElementQuery .= '?doubleClip schema:isPartOf ?videoLecture .' . PHP_EOL;
+    $videoLectureElementQuery = 'PREFIX vidp: <https://bmake.th-brandenburg.de/vidp#>
+                                PREFIX schema: <https://schema.org/>
+                                PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+                                SELECT DISTINCT ?videoLecture ?headline ?thumbnail ?label ?description ?language
+                                WHERE { ?videoLecture a vidp:VideoLecture ;
+                                schema:description ?description ;
+                                schema:thumbnail ?logo ;
+                                schema:inLanguage ?language ;
+                                rdfs:label ?label ;
+                                schema:headline ?headline .
+                                ?logo schema:identifier ?thumbnail .
+                                ?videoLecture a vidp:VideoLecture;
+                                schema:about ?modul.
+                                ?modul a vidp:Module;
+                                rdfs:label ?modul_label .
+                                ?modul schema:isPartOf ?studyProgram .
+                                ?studyProgram rdfs:label ?labelStudyProgram .
+                                FILTER ( lang(?headline) = "de" ) .
+                                ?doubleClip schema:isPartOf ?videoLecture .';
 
     $lecturerChecked = false;
     $lecturerCount = count($_SESSION['lecturers']);
     #Diese for Schleife kontrolliert if eine der Checkboxes für die Filterfunktion "Lecturer" markiert wurde.
     for ($i = 0; $i < $lecturerCount; $i++) {
-        if ($_GET["checkLecturer" . ($i + 1)] != "") {
+        if ($_GET["lecturer" . ($i + 1)] != "") {
             $lecturerChecked = true;
         }
     }
@@ -221,9 +279,9 @@ $this->querylist($moduleQuery, 'vidp/types/videoLectureList/filterNames.phtml');
        	 ?doubleClip schema:creator ?creator.
          ?creator rdfs:label ?nameCreator.
          FILTER (';
-        #Durch diese for Schleife wird sichergestellt, dass mehrere Dozenten ausgewählt werden können
+        #Durch diese for Schleife sichergestellt, dass mehrere Dozenten ausgewählt werden können
         for ($i = 0; $i < $lecturerCount; $i++) {
-            $videoLectureElementQuery .= 'contains( ?nameCreator, "' . $_GET["checkLecturer" . ($i + 1)] . '" )';
+            $videoLectureElementQuery .= 'contains( ?nameCreator, "' . $_GET["lecturer" . ($i + 1)] . '" )';
             if ($i < $lecturerCount - 1) {
                 $videoLectureElementQuery .= ' || ';
             }
@@ -234,9 +292,9 @@ $this->querylist($moduleQuery, 'vidp/types/videoLectureList/filterNames.phtml');
          ?doubleClip schema:contributor ?contributor. 
          ?contributor rdfs:label ?nameContributor. 
          FILTER (';
-        #Durch diese for Schleife wird sichergestellt, dass mehrere Dozenten ausgewählt werden können
+        #Durch diese for Schleife sichergestellt, dass mehrere Dozenten ausgewählt werden können
         for ($i = 0; $i < $lecturerCount; $i++) {
-            $videoLectureElementQuery .= 'contains( ?nameContributor, "' . $_GET["checkLecturer" . ($i + 1)] . '" )';
+            $videoLectureElementQuery .= 'contains( ?nameContributor, "' . $_GET["lecturer" . ($i + 1)] . '" )';
             if ($i < $lecturerCount - 1) {
                 $videoLectureElementQuery .= ' || ';
             }
@@ -245,15 +303,18 @@ $this->querylist($moduleQuery, 'vidp/types/videoLectureList/filterNames.phtml');
             ')}' . PHP_EOL;
     }
 
-    if ($_GET["checkEn"] != "" || $_GET["checkDe"] != "") {  //Query für Filterfunktion "Sprache"
-        $videoLectureElementQuery .= 'FILTER ( (?language ="' . $_GET["checkEn"] . '") 
-            || (?language ="' . $_GET["checkDe"] . '") ) .' . PHP_EOL;
+    if ($_GET["lang1"] != "" || $_GET["lang2"] != "") {  //Query für Filterfunktion "Sprache"
+        $videoLectureElementQuery .= 'FILTER ( (?language ="' . $_GET["lang1"] . '") 
+            || (?language ="' . $_GET["lang2"] . '") ) .';
     }
-    if ($_GET['module'] != "") { //Query für Filterfunktion Modul
+    if ($_GET['studyProgram'] != "") {
+        $videoLectureElementQuery .= 'FILTER (contains(?labelStudyProgram, "' . $_GET['studyProgram'] . '"))';
+    }
+    if ($_GET['module'] != "") {
         $videoLectureElementQuery .= 'FILTER (contains(?modul_label, "' . $_GET['module'] . '"))';
     }
-    $videoLectureElementQuery .= '}' . PHP_EOL;
-    $videoLectureElementQuery .= 'ORDER BY ?videoLecture' . PHP_EOL;
+
+    $videoLectureElementQuery .= '} ORDER BY ?videoLecture';
     ?>
 
     <?=
@@ -262,9 +323,13 @@ $this->querylist($moduleQuery, 'vidp/types/videoLectureList/filterNames.phtml');
     #Hier wird kontrolliert, ob die angewendte Query mindestens eine Vorlesung zurückgibt. Falls nicht, wird eine Nachricht angezeigt.
     $result = $this->querylist($videoLectureElementQuery, 'vidp/types/videoLectureList/videoLectureElement.phtml', array());
     if ($result == "") {
-        echo "<h3>Es gibt keine Videovorlesung für die von Ihnen ausgewählten Filter.</h3>";
+        echo "<h3>Es gibt keine Videovorlesung für die von Ihnen ausgewählten Filtern.</h3>";
     }
     ?>
+
+
+    <script> toggleAllCheckboxesToIndeterminate(); </script>
+    "
 
 
 </div>
