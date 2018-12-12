@@ -29,24 +29,17 @@ session_start();
     });
 </script>
 
-<?php
 
-$lecturerQuery = "PREFIX ns4: <http://purl.org/vocommons/voaf#>
-                    PREFIX ns3: <http://ns.ontowiki.net/SysOnt/Site/>
-                    PREFIX ns2: <https://bmake.th-brandenburg.de/vidp#>
-                    PREFIX ns1: <https://schema.org/>
-                    PREFIX ns0: <http://rdfs.org/ns/void#>
-                    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-                    PREFIX owl: <http://www.w3.org/2002/07/owl#>
-                    PREFIX foaf: <http://xmlns.com/foaf/0.1/>
-                    PREFIX sysont: <http://ns.ontowiki.net/SysOnt/>
-                    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-                    SELECT DISTINCT ?lecturer
-                    WHERE {
-                    
-                    ?lecturerURI a ns2:Lecturer;
-                    rdfs:label ?lecturer.
-                    }";
+
+<?php
+#Diese Query ist nur für Auflisten der Lecturer als checkboxes.
+$lecturerQuery = "PREFIX ns2: <https://bmake.th-brandenburg.de/vidp#>
+                  PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+                  SELECT DISTINCT ?lecturer
+                  WHERE {
+                  ?lecturerURI a ns2:Lecturer;
+                  rdfs:label ?lecturer.
+                  }";
 
 ?>
 
@@ -58,22 +51,9 @@ $this->querylist($lecturerQuery, 'vidp/types/videoLectureList/filterNames.phtml'
 ?>
 
 <?php
-$moduleQuery = "PREFIX vs: <http://www.w3.org/2003/06/sw-vocab-status/ns#>
-                PREFIX ns4: <http://purl.org/vocommons/voaf#>
-                PREFIX ns3: <http://ns.ontowiki.net/SysOnt/Site/>
-                PREFIX ns2: <https://bmake.th-brandenburg.de/vidp#>
-                PREFIX ns1: <https://schema.org/>
-                PREFIX vide: <https://bmake.th-brandenburg.de/vide#>
-                PREFIX ns0: <http://rdfs.org/ns/void#>
-                PREFIX vidp: <https://bmake.th-brandenburg.de/vidp#>
-                PREFIX wd: <http://www.wikidata.org/entity/>
-                PREFIX schema: <https://schema.org/>
-                PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+#Diese Query ist nur für Auflisten der Module als Dropdown-Menü.
+$moduleQuery = "PREFIX ns2: <https://bmake.th-brandenburg.de/vidp#>
                 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-                PREFIX owl: <http://www.w3.org/2002/07/owl#>
-                PREFIX foaf: <http://xmlns.com/foaf/0.1/>
-                PREFIX sysont: <http://ns.ontowiki.net/SysOnt/>
-                PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
                 SELECT DISTINCT ?module
                 WHERE {
                 ?moduleUri a ns2:Module;
@@ -90,27 +70,13 @@ $this->querylist($moduleQuery, 'vidp/types/videoLectureList/filterNames.phtml');
 
 
 <?php
-$studyProgramQuery = "PREFIX vs: <http://www.w3.org/2003/06/sw-vocab-status/ns#>
-                        PREFIX ns4: <http://purl.org/vocommons/voaf#>
-                        PREFIX ns3: <http://ns.ontowiki.net/SysOnt/Site/>
-                        PREFIX ns2: <https://bmake.th-brandenburg.de/vidp#>
-                        PREFIX ns1: <https://schema.org/>
-                        PREFIX vide: <https://bmake.th-brandenburg.de/vide#>
-                        PREFIX ns0: <http://rdfs.org/ns/void#>
-                        PREFIX vidp: <https://bmake.th-brandenburg.de/vidp#>
-                        PREFIX wd: <http://www.wikidata.org/entity/>
-                        PREFIX schema: <https://schema.org/>
-                        PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
-                        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-                        PREFIX owl: <http://www.w3.org/2002/07/owl#>
-                        PREFIX foaf: <http://xmlns.com/foaf/0.1/>
-                        PREFIX sysont: <http://ns.ontowiki.net/SysOnt/>
-                        PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-                        SELECT DISTINCT ?studyProgram
-                        WHERE {
-                        ?studyProgramUri a ns2:StudyProgram;
-                        rdfs:label ?studyProgram.
-                        }";
+$studyProgramQuery = "PREFIX ns2: <https://bmake.th-brandenburg.de/vidp#>
+                      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+                      SELECT DISTINCT ?studyProgram
+                      WHERE {
+                      ?studyProgramUri a ns2:StudyProgram;
+                      rdfs:label ?studyProgram.
+                      }";
 ?>
 
 <?php
@@ -208,7 +174,7 @@ $this->querylist($studyProgramQuery, 'vidp/types/videoLectureList/filterNames.ph
                 <table class="table responsive">
                     <thead>
                     <tr>
-                        <th class="text-left">Studiengang</th>
+                        <th class="text-left"><i class="fas fa-graduation-cap"></i> &nbsp; Studiengang</th>
                     </tr>
                     </thead>
                     <tr>
