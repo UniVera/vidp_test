@@ -44,48 +44,57 @@
 
         ?>
 
-        <table class="table">
-            <tr>
-                <td rowspan="3" width="20%" height="80">
-                    <a href="<?= htmlentities($url) ?>"><?php echo "<img src='https://drive.google.com/uc?export=view&id=$this->thumbnail' class='img-responsive' width='200' height='150'>" ?></a>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 col-md-2">
+                    <a href="<?= htmlentities($url) ?>"><?php echo "<img src='https://drive.google.com/uc?export=view&id=$this->thumbnail' class='img-responsive center-block ' width='200' height='150'>" ?></a>
                     <!--https://fbwtube.th-brandenburg.de/OntoWiki/extensions/site/sites/vidp/img/-->
-                </td>
-                <td width="40%" height="40">
-                    <font size="4">
-                        <a href="<?= htmlentities($url) ?>"><b><?= $this->label ?></b></a>
-                    </font>
-                </td>
-                <td align="right" width="30%">
+                </div>
+                <div class="col-md-9">
+                    <table class="table">
+                        <tr>
+                        <td>
+                            <font size="4">
+                                <a href="<?= htmlentities($url) ?>"><b><?= $this->label ?></b></a>
+                            </font>
+                        </td>
+                        </tr>
+
+                        <tr>
+                            <td>
                     <?php
-                    echo "Sprache: " . $this->language . " | ";
+                    echo "Sprache: " . $this->language . " &middot; ";
                     echo sizeof($result);
                     if (sizeof($result) > 1) {
-                        echo " Teile | ";
+                        echo " Teile &middot; ";
                     } else {
-                        echo " Teil | ";
+                        echo " Teil &middot; ";
                     }
                     echo "Gesamtdauer: ";
                     echo gmdate("H:i:s", $time);
                     ?>
-                </td>
-            </tr>
-            <tr>
-                <td valign="top" colspan="2" width="70%">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
                     <?=
                     strstr($this->description, ". ", true);
                     echo ". ";
                     ?>
                     <a href="<?= htmlentities($url) ?>">mehr</a>
-                </td>
-            </tr>
-            <tr>
-                <td valign="top" colspan="2" width="70%">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
                     <i>
                         <?php echo $lecturer ?>
                     </i>
-                </td>
-            </tr>
-        </table>
+                            </td>
+                        </tr>
+                </table>
+                </div>
+        </div>
         <br>
+        </div>
     </div>
 </div>
