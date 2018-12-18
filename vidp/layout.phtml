@@ -31,7 +31,7 @@ $logo_link = "https://drive.google.com/uc?export=view&id=17E26Sc9nfJth8aqTtZ5Rkt
     <link rel="alternate" type="application/rdf+xml" href="<?= $this->resourceUri ?>.rdf"/>
     <link rel="pingback" href="<?= $this->pingbackUrl ?>"/>
 
-    <link rel="shortcut icon" type="image/x-icon" href=<?= $logo_link ?> />
+    <link rel="shortcut icon" type="image/x-icon" href=<?= $logo_link ?>/>
 
     <link rel="<?= $this->curie("http://xmlns.com/foaf/0.1/primaryTopic") ?>" href="<?= $this->resourceUri ?>"/>
     <link type="text/css" href="<?= $this->baseUri ?>/css/bootstrap.css" rel="stylesheet"/>
@@ -41,6 +41,8 @@ $logo_link = "https://drive.google.com/uc?export=view&id=17E26Sc9nfJth8aqTtZ5Rkt
     <link type="text/css" href="<?= $this->baseUri ?>/css/bootstrap-theme.css.map"/>
     <link type="text/css" href="<?= $this->baseUri ?>/css/bootstrap-glyphicons.css"/>
     <link type="text/css" href="<?= $this->baseUri ?>/css/modifications.css" rel="stylesheet"/>
+    <link type="text/css" rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+          integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 
 
     <!-- jQuery -->
@@ -86,18 +88,39 @@ $logo_link = "https://drive.google.com/uc?export=view&id=17E26Sc9nfJth8aqTtZ5Rkt
                     fbwTube</a>
             </div>
             <?php
+            $search = '
+                      <div style="margin-bottom: 04px; margin-top: 08px;">
+                          <form method="GET" id="filter_form" action="https://fbwtube.th-brandenburg.de/OntoWiki/fbwTube/VideoVorlesungen.html">
+                              <div class="input-group">
+                                  <input class="form-control" type="text" placeholder="Suchen..." name="search" value=' . htmlspecialchars($_GET['search']) . '>
+                                  <span class="input-group-btn" style="width: auto">
+                                  <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
+                                  </span>
+                              </div>
+                          </form>
+                      </div>
+                        ';
             $navResource = $this->templateOptions()->getValue('http://rdfs.org/ns/void#rootResource');
             $navOptions = array(
                 'navResource' => $navResource,
                 'navId' => 'navbar-main',
-                'suffix' => '<!-- /#nav-main -->',
+                'suffix' => $search,
                 'activeUrl' => $this->resourceUri,
                 'listClass' => 'nav navbar-nav',
                 'navClass' => 'navbar-collapse collapse'
             );
-            echo $this->navigationList($navOptions);
             ?>
+
+
+            <?= $this->navigationList($navOptions) ?>
+
+
+            <?php
+            #echo $this->navigationList($navOptions);
+            ?>
+
         </div>
+
     </div>
 
     <div class="container">
@@ -113,7 +136,8 @@ $logo_link = "https://drive.google.com/uc?export=view&id=17E26Sc9nfJth8aqTtZ5Rkt
 </div>
 <div id="footer">
     <div class="container">
-        <p class="text-muted">&copy; Technische Hochschule Brandenburg - Fachbereich Wirtschaft 2018 &bull; <a href="https://fbwtube.th-brandenburg.de/OntoWiki/fbwTube/Impressum">Impressum</a> </p>
+        <p class="text-muted">&copy; Technische Hochschule Brandenburg - Fachbereich Wirtschaft 2018 &bull; <a
+                    href="https://fbwtube.th-brandenburg.de/OntoWiki/fbwTube/Impressum">Impressum</a></p>
     </div>
 </div>
 
