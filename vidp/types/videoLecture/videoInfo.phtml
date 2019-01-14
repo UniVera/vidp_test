@@ -5,6 +5,7 @@
             <tr>
                 <td>
                     <?php
+                    #Umwandeln der Monatszahlen in Strings
                     $months = array("01"=>"Jan. ", "02"=>"Feb. ", "03"=>"M&auml;rz ", "04"=>"Apr. ", "05"=>"Mai ", "06"=>"Jun. ", "07"=>"Jul. ", "08"=>"Aug. ", "09"=>"Sep. ", "10"=>"Okt. ", "11"=>"Nov. ", "12"=>"Dez. ");
                     $month = date_format($this->time, "m");
                     $month = $months[$month];
@@ -14,7 +15,7 @@
                 </td>
                 <td width="16%" align="center">
                     <?php
-                    echo "<a target=_blank ><img src='https://fbwtube.th-brandenburg.de/OntoWiki/extensions/site/sites/vidp/img/$this->thumbnail' class='img-responsive' alt='Logo' width='304' height='236'></a>"
+                    echo "<a target=_blank ><img src='https://drive.google.com/uc?export=view&id=$this->thumbnail' class='img-responsive' alt='Logo' width='304' height='236'></a>"
                     ?>
                 </td>
             </tr>

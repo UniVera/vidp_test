@@ -44,7 +44,6 @@ $logo_link = "https://drive.google.com/uc?export=view&id=17E26Sc9nfJth8aqTtZ5Rkt
     <link type="text/css" rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
           integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 
-
     <!-- jQuery -->
     <script type="text/javascript" src="<?= $this->baseUri ?>/js/jquery.js"></script>
 
@@ -59,7 +58,7 @@ $logo_link = "https://drive.google.com/uc?export=view&id=17E26Sc9nfJth8aqTtZ5Rkt
     <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-
+    <script type="text/javascript" src="<?= $this->baseUri ?>/js/reset_filter.js"></script>
     <?php
     // includes the GA header script
     // includes the exhibit header links
@@ -90,11 +89,11 @@ $logo_link = "https://drive.google.com/uc?export=view&id=17E26Sc9nfJth8aqTtZ5Rkt
             <?php
             $search = '
                       <div style="margin-bottom: 04px; margin-top: 08px; float: right;">
-                          <form method="GET" id="filter_form" action="https://fbwtube.th-brandenburg.de/OntoWiki/fbwTube/VideoVorlesungen.html">
+                          <form method="GET" id="search_form" action="https://fbwtube.th-brandenburg.de/OntoWiki/fbwTube/VideoVorlesungen.html">
                               <div class="input-group"  style="max-width: 230px; width: auto;">
                                   <input class="form-control" type="text" placeholder="Suchen..." name="search" value="' . htmlspecialchars($_GET['search']) . '">
                                   <span class="input-group-btn">
-                                  <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
+                                  <button class="btn btn-default" type="submit" form="search_form" onclick="reset_filter()"><i class="fa fa-search"></i></button>
                                   </span>
                               </div>
                           </form>
@@ -144,6 +143,7 @@ $logo_link = "https://drive.google.com/uc?export=view&id=17E26Sc9nfJth8aqTtZ5Rkt
 <script type="text/javascript" src="<?= $this->baseUri ?>/js/jquery.js"></script>
 <script type="text/javascript" src="<?= $this->baseUri ?>/js/bootstrap.js"></script>
 <script type="text/javascript" src="<?= $this->baseUri ?>/js/custom.js"></script>
+
 
 </body>
 </html>

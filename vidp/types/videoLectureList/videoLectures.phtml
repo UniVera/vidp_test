@@ -1,5 +1,7 @@
 <!-- Datei zur Darstellung aller Videovorlesungen als Liste -->
+
 <head>
+    <!-- Laden des Scripts zum Aktivieren des Zustandes "Indeterminate" für Checkboxes -->
     <script type="text/javascript" src="<?= $this->baseUri ?>/js/indeterminate.js"></script>
 </head>
 <?php
@@ -9,12 +11,15 @@ session_start();
     <h2><?php echo $this->title ?></h2>
 </div>
 
+
+<!-- Erzeugen des Buttons zum Ein- und Ausblenden des Filterareas -->
 <button type="button" id="filterButton" class="btn btn-success btn-lg btn-block" aria-pressed="true"
         data-toggle="collapse"
         data-target="#filter" style="margin-bottom: 30px"><i class="fas fa-filter"></i> &nbsp;
     Filtern
 </button>
-<!-- Button "Filtern" ein-/ausblenden -->
+
+<!-- Script zum visuellen Aktivieren und Deaktivieren beim Klicken des Buttons "Filtern" -->
 <script language="JavaScript" type="text/javascript">
     $('#filterButton').on('click', function (e) {
         $('#filterButton').each(function () {
@@ -27,10 +32,8 @@ session_start();
     });
 </script>
 
-
-
 <?php
-#Diese Query ist nur für Auflisten der Lecturer als checkboxes.
+#Diese Query ist nur für Auflisten der Lehrenden als checkboxes.
 $lecturerQuery = "PREFIX ns2: <https://bmake.th-brandenburg.de/vidp#>
                   PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
                   SELECT DISTINCT ?lecturer
@@ -42,7 +45,7 @@ $lecturerQuery = "PREFIX ns2: <https://bmake.th-brandenburg.de/vidp#>
 ?>
 
 <?php
-
+#Hier werden die einzelnen Lehrenden in ein Array geschrieben, um später einfacher aufgelistet werden zu können.
 $_SESSION['lecturers'] = array();
 $this->querylist($lecturerQuery, 'vidp/types/videoLectureList/filterNames.phtml');
 
@@ -60,7 +63,7 @@ $moduleQuery = "PREFIX ns2: <https://bmake.th-brandenburg.de/vidp#>
 ?>
 
 <?php
-
+#Hier werden die einzelnen Module in ein Array geschrieben, um später einfacher aufgelistet werden zu können.
 $_SESSION['modules'] = array();
 $this->querylist($moduleQuery, 'vidp/types/videoLectureList/filterNames.phtml');
 
@@ -68,6 +71,7 @@ $this->querylist($moduleQuery, 'vidp/types/videoLectureList/filterNames.phtml');
 
 
 <?php
+#Diese Query ist nur für Auflisten der Studiengänge als Dropdown-Menü.
 $studyProgramQuery = "PREFIX ns2: <https://bmake.th-brandenburg.de/vidp#>
                       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
                       SELECT DISTINCT ?studyProgram
@@ -78,14 +82,15 @@ $studyProgramQuery = "PREFIX ns2: <https://bmake.th-brandenburg.de/vidp#>
 ?>
 
 <?php
-
+#Hier werden die einzelnen Studiengänge in ein Array geschrieben, um später einfacher aufgelistet werden zu können.
 $_SESSION['studyPrograms'] = array();
 $this->querylist($studyProgramQuery, 'vidp/types/videoLectureList/filterNames.phtml');
 
 ?>
 
+<!-- Erzeugung des Formulars für die Filter -->
 <div id="filter" class="collapse jumbotron container-fluid">
-    <form method="GET" id="filter_form">
+    <form method="GET" id="search_form">
         <div class="row">
             <div class="col-md-4 col-sm-6">
                 <table class="table responsive">
@@ -97,8 +102,9 @@ $this->querylist($studyProgramQuery, 'vidp/types/videoLectureList/filterNames.ph
                     <tr>
                         <td>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="en" onclick="toggle(this)"
+                                <input class="form-check-input" type="checkbox" value="en" form="search_form" onclick="toggle(this)"
                                        id="lang1" name="lang1" <?php echo($_GET["lang1"] == "en" ? "checked" : "") ?>>
+                                <!-- Kontrollieren, ob Checbox gesetzt wurde -->
                                 <label class="form-check-label" for="lang1">
                                     Englisch
                                 </label>
@@ -108,8 +114,9 @@ $this->querylist($studyProgramQuery, 'vidp/types/videoLectureList/filterNames.ph
                     <tr>
                         <td>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="de" onclick="toggle(this)"
+                                <input class="form-check-input" type="checkbox" value="de" form="search_form" onclick="toggle(this)"
                                        id="lang2" name="lang2" <?php echo($_GET["lang2"] == "de" ? "checked" : "") ?>>
+                                <!-- Kontrollieren, ob Checbox gesetzt wurde -->
                                 <label class="form-check-label" for="lang2">
                                     Deutsch
                                 </label>
@@ -126,13 +133,14 @@ $this->querylist($studyProgramQuery, 'vidp/types/videoLectureList/filterNames.ph
                     </tr>
                     </thead>
                     <?php
+                    #Generische Erzeugung der Checkbox-Liste für Lehrende
                     for ($i = 0; $i < count($_SESSION['lecturers']); $i++) {
                         $currentLecturer = $_SESSION['lecturers'][$i];
                         $currentCheckBoxName = "lecturer" . ($i + 1);
                         $currentCheckBox = '<tr>';
                         $currentCheckBox .= '<td>';
                         $currentCheckBox .= '<div class="form-check">';
-                        $currentCheckBox .= '<input class="form-check-input" type="checkbox" value="' . $currentLecturer . '" onclick="toggle(this)" id="' . $currentCheckBoxName . '"';
+                        $currentCheckBox .= '<input class="form-check-input" type="checkbox" value="' . $currentLecturer . '" form="search_form" onclick="toggle(this)" id="' . $currentCheckBoxName . '"';
                         $currentCheckBox .= 'name="' . $currentCheckBoxName . '"' . ($_GET[$currentCheckBoxName] == $currentLecturer ? "checked" : "") . '>';
                         $currentCheckBox .= '<label class="form-check-label" for=' . $currentCheckBoxName . '>';
                         $currentCheckBox .= '&nbsp;' . $currentLecturer;
@@ -156,9 +164,10 @@ $this->querylist($studyProgramQuery, 'vidp/types/videoLectureList/filterNames.ph
                     </thead>
                     <tr>
                         <td>
-                            <select class="form-control responsive" name="module" form="filter_form">
+                            <select class="form-control responsive" name="module" form="search_form">
                                 <?php
                                 echo "<option value=''>--Bitte wählen Sie ein Modul aus--</option>";
+                                #Generische Erzeugung der Dropdown-Menü für Module
                                 for ($i = 0; $i < count($_SESSION['modules']); $i++) {
                                     $currentModule = $_SESSION['modules'][$i];
                                     $currentOption = '<option value="' . $currentModule . '" ' . ($_GET['module'] == $currentModule ? "selected" : "") . '>' . $currentModule . '</option>';
@@ -177,9 +186,10 @@ $this->querylist($studyProgramQuery, 'vidp/types/videoLectureList/filterNames.ph
                     </thead>
                     <tr>
                         <td>
-                            <select class="form-control responsive" name="studyProgram" form="filter_form">
+                            <select class="form-control responsive" name="studyProgram" form="search_form">
                                 <?php
                                 echo "<option value=''>--Bitte wählen Sie einen Studiengang aus--</option>";
+                                #Generische Erzeugung der Dropdown-Menü für Studiengänge
                                 for ($i = 0; $i < count($_SESSION['studyPrograms']); $i++) {
                                     $currentStudyProgram = $_SESSION['studyPrograms'][$i];
                                     $currentOption = '<option value="' . $currentStudyProgram . '" ' . ($_GET['studyProgram'] == $currentStudyProgram ? "selected" : "") . '>' . $currentStudyProgram . '</option>';
@@ -194,10 +204,10 @@ $this->querylist($studyProgramQuery, 'vidp/types/videoLectureList/filterNames.ph
         </div>
         <div class="row" align="center">
             <div class="btn-group" role="group">
-                <button type="submit" class="btn btn-success"><i class="fas fa-check"></i>&nbsp; Anwenden</button>
+                <button type="submit" class="btn btn-success" form="search_form" id="submit_filter"><i class="fas fa-check"></i>&nbsp; Anwenden</button>
                 <!-- Button wird deaktiviert, wenn nichts ausgewählt wurde, also wenn $_GET leer ist.  -->
                 <button type="reset" class="btn btn-danger"
-                        onclick="location.href='/OntoWiki/fbwTube/VideoVorlesungen.html'" <?php if (!$_GET) echo 'disabled="disabled"' ?>>
+                        onclick="location.href='/OntoWiki/fbwTube/VideoVorlesungen.html'">
                     <i class="fas fa-undo"></i>&nbsp; Zurücksetzen
                 </button>
             </div>
@@ -216,6 +226,7 @@ $this->querylist($studyProgramQuery, 'vidp/types/videoLectureList/filterNames.ph
                                 schema:thumbnail ?logo ;
                                 schema:inLanguage ?language ;
                                 rdfs:label ?label ;
+                                schema:keywords ?keywords;
                                 schema:headline ?headline .
                                 ?logo schema:identifier ?thumbnail .
                                 ?videoLecture a vidp:VideoLecture;
@@ -275,6 +286,14 @@ $this->querylist($studyProgramQuery, 'vidp/types/videoLectureList/filterNames.ph
     if ($_GET['studyProgram'] != "") {
         $videoLectureElementQuery .= 'FILTER (contains(?labelStudyProgram, "' . $_GET['studyProgram'] . '"))';
     }
+    if ($_GET['search'] != "") {
+        $searchWords = explode(' ', $_GET['search']);
+        $videoLectureElementQuery .= 'FILTER (';
+        foreach ($searchWords as $serachWord) {
+            $videoLectureElementQuery .= ' regex(?keywords, "'. $serachWord .'", "i") || regex(?headline, "'. $serachWord .'", "i") || regex(?description, "'. $serachWord .'", "i") || ';
+        }
+        $videoLectureElementQuery = substr($videoLectureElementQuery, 0, -3) . " )";
+    }
     $videoLectureElementQuery .= '} ORDER BY ?videoLecture';
     ?>
 
@@ -284,7 +303,7 @@ $this->querylist($studyProgramQuery, 'vidp/types/videoLectureList/filterNames.ph
     #Hier wird kontrolliert, ob die angewendte Query mindestens eine Vorlesung zurückgibt. Falls nicht, wird eine Nachricht angezeigt.
     $result = $this->querylist($videoLectureElementQuery, 'vidp/types/videoLectureList/videoLectureElement.phtml', array());
     if ($result == "") {
-        echo "<h3>Es gibt keine Videovorlesung für die von Ihnen ausgewählten Filtern.</h3>";
+        echo "<h3>Die Suche lieferte keine Ergebnisse.</h3>";
     }
     ?>
 
