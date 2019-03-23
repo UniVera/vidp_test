@@ -214,6 +214,36 @@ $this->querylist($studyProgramQuery, 'vidp/types/videoLectureList/filterNames.ph
         </div>
     </form>
 </div>
+<!-- Bereich für "Suche nach:"  -->
+<?php
+if ($_GET['search'] != "") {
+    echo '<div class="panel panel-default"> <div class="panel-body">Ihre Suche nach:';
+    $searchString= $searchString . ($_GET['search']);
+    echo '<b> ' . $searchString . '</b>';
+    if ($_GET["lang1"] != "" || $_GET["lang2"] != "" || lecturerList(count($_SESSION['lecturers'])) != ""  || $_GET['studyProgram'] != "" || $_GET['module'] != "") {
+        echo ' mit folgenden Kriterien: ';
+        if ($_GET["lang1"] != "") $searchCriteria= "Englisch" . ", " ;
+        if ($_GET["lang2"] != "") $searchCriteria=  $searchCriteria . "Deutsch" . ", " ;
+        if ($_SESSION['lecturers'] != "") $searchCriteria=  $searchCriteria . lecturerList(count($_SESSION['lecturers']));
+        if ($_GET['studyProgram'] != "") $searchCriteria= $searchCriteria . ($_GET['studyProgram']) . ", " ;
+        if ($_GET['module'] != "") $searchCriteria= $searchCriteria . ($_GET['module']) . ", ";
+        $searchCriteria = substr_replace($searchCriteria ,"",-2);
+        echo '<b>' . $searchCriteria . '</b>';
+    }
+    echo '</div> </div>';
+}
+if ($_GET['search'] == "" && ($_GET["lang1"] != "" || $_GET["lang2"] != "" || lecturerList(count($_SESSION['lecturers'])) != ""  || $_GET['studyProgram'] != "" || $_GET['module'] != "")) {
+    echo '<div class="panel panel-default"> <div class="panel-body">Ihre Suchkriterien: ';
+        if ($_GET["lang1"] != "") $searchCriteria= "Englisch" . ", " ;
+        if ($_GET["lang2"] != "") $searchCriteria=  $searchCriteria . "Deutsch" . ", " ;
+        if ($_SESSION['lecturers'] != "") $searchCriteria=  $searchCriteria . lecturerList(count($_SESSION['lecturers']));
+        if ($_GET['studyProgram'] != "") $searchCriteria= $searchCriteria . ($_GET['studyProgram']) . ", " ;
+        if ($_GET['module'] != "") $searchCriteria= $searchCriteria . ($_GET['module']) . ", ";
+        $searchCriteria = substr_replace($searchCriteria ,"",-2);
+        echo '<b>' . $searchCriteria . '</b>';
+        echo '</div> </div>';
+    }
+?>
 
 <div class="jumbotron">
     <?php
@@ -254,7 +284,7 @@ $this->querylist($studyProgramQuery, 'vidp/types/videoLectureList/filterNames.ph
          FILTER (';
         #Durch diese for Schleife sichergestellt, dass mehrere Dozenten ausgewählt werden können
         for ($i = 0; $i < $lecturerCount; $i++) {
-            $videoLectureElementQuery .= 'contains( ?nameCreator, "' . $_GET["lecturer" . ($i + 1)] . '" )';
+            $videoLectureElementQuery .= 'CONTAINS( ?nameCreator, "' . $_GET["lecturer" . ($i + 1)] . '" )';
             if ($i < $lecturerCount - 1) {
                 $videoLectureElementQuery .= ' || ';
             }
@@ -267,7 +297,7 @@ $this->querylist($studyProgramQuery, 'vidp/types/videoLectureList/filterNames.ph
          FILTER (';
         #Durch diese for Schleife sichergestellt, dass mehrere Dozenten ausgewählt werden können
         for ($i = 0; $i < $lecturerCount; $i++) {
-            $videoLectureElementQuery .= 'contains( ?nameContributor, "' . $_GET["lecturer" . ($i + 1)] . '" )';
+            $videoLectureElementQuery .= 'CONTAINS( ?nameContributor, "' . $_GET["lecturer" . ($i + 1)] . '" )';
             if ($i < $lecturerCount - 1) {
                 $videoLectureElementQuery .= ' || ';
             }
@@ -281,20 +311,35 @@ $this->querylist($studyProgramQuery, 'vidp/types/videoLectureList/filterNames.ph
             || (?language ="' . $_GET["lang2"] . '") ) .';
     }
     if ($_GET['module'] != "") {
-        $videoLectureElementQuery .= 'FILTER (contains(?modul_label, "' . $_GET['module'] . '"))';
+        $videoLectureElementQuery .= 'FILTER (CONTAINS(?modul_label, "' . $_GET['module'] . '"))';
     }
     if ($_GET['studyProgram'] != "") {
-        $videoLectureElementQuery .= 'FILTER (contains(?labelStudyProgram, "' . $_GET['studyProgram'] . '"))';
+        $videoLectureElementQuery .= 'FILTER (CONTAINS(?labelStudyProgram, "' . $_GET['studyProgram'] . '"))';
     }
     if ($_GET['search'] != "") {
         $searchWords = explode(' ', $_GET['search']);
         $videoLectureElementQuery .= 'FILTER (';
-        foreach ($searchWords as $serachWord) {
-            $videoLectureElementQuery .= ' regex(?keywords, "'. $serachWord .'", "i") || regex(?headline, "'. $serachWord .'", "i") || regex(?description, "'. $serachWord .'", "i") || ';
+        foreach ($searchWords as $searchWord) {
+            $videoLectureElementQuery .= ' REGEX(?keywords, "'. $searchWord .'", "i") || REGEX(?headline, "'. $searchWord .'", "i") || REGEX(?description, "'. $searchWord .'", "i") || ';
         }
         $videoLectureElementQuery = substr($videoLectureElementQuery, 0, -3) . " )";
+        #$videoLectureElementQuery .= '} ORDER BY STRLEN(REPLACE(REPLACE(CONCAT(?headline, ?description,?keywords), "'. $searchWord .'", "#", "i"), "[^#]", ""))';
     }
+    #else {
     $videoLectureElementQuery .= '} ORDER BY ?videoLecture';
+    #}
+
+    # Funktion für Lecturerlist für Suchkriterienliste
+    function lecturerList($lecturerCount)
+    {
+        $lecturerList = null;
+        for ($i = 0; $i < $lecturerCount; $i++) {
+            if ($_GET["lecturer" . ($i + 1)] != "") {
+                $lecturerList = $lecturerList . $_GET["lecturer" . ($i + 1)] . ", ";
+            }
+        }
+        return $lecturerList;
+    }
     ?>
 
     <?=
