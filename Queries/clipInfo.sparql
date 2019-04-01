@@ -1,0 +1,16 @@
+PREFIX vidp: <https://bmake.th-brandenburg.de/vidp#>
+PREFIX schema: <https://schema.org/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX vide: <https://bmake.th-brandenburg.de/vide#>
+
+SELECT ?headlineclips ?labelclips ?urlclips ?durationclips ?dateClips
+WHERE {    
+	?doubleclips 	a 			vidp:DoubleClip;
+			schema:isPartOf 	vide:BPMN1;
+			schema:headline		?headlineclips;
+			schema:duration		?durationclips;
+			rdfs:label		?labelclips;
+	                schema:dateCreated 	?dateClips ;
+	                schema:url 		?urlclips.
+}
+ORDER BY ASC( ?labelclips )

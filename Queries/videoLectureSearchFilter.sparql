@@ -1,0 +1,43 @@
+PREFIX vidp: <https://bmake.th-brandenburg.de/vidp#>
+PREFIX schema: <https://schema.org/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+
+SELECT DISTINCT ?videoLecture ?headline ?thumbnail ?label ?description ?language
+WHERE { 
+	?videoLecture 	a 			vidp:VideoLecture ;
+			schema:description	?description ;
+			schema:thumbnail 	?logo ;
+			schema:inLanguage 	?language ;
+			rdfs:label 		?label ;
+			schema:keywords 	?keywords;
+			schema:headline 	?headline .
+	?logo 		schema:identifier 	?thumbnail .
+	?videoLecture 	a 			vidp:VideoLecture;
+			schema:about 		?modul.
+	?modul 		a 			vidp:Module;
+			rdfs:label 		?modul_label ;
+			schema:isPartOf 	?studyProgram .
+	?studyProgram 	rdfs:label 		?labelStudyProgram .
+	FILTER ( lang(?headline) = "de" )
+	?doubleClip 	schema:isPartOf 	?videoLecture .
+	
+	{
+		?doubleClip 	schema:creator 		?creator .
+		?creator 	rdfs:label 		?nameCreator.
+		FILTER ( CONTAINS(?nameCreator, "Laura"))
+	} UNION {
+		?doubleClip 	schema:contributor 	?contributor . 
+		?contributor 	rdfs:label 		?nameContributor .
+		FILTER ( CONTAINS(?nameContributor, "Laura") )
+	}
+	
+	FILTER ( ?language = "en" )
+	
+	FILTER ( CONTAINS(?modul_label, "Grundlagen der Prozessmodellierung") )
+	
+	FILTER ( CONTAINS(?labelStudyProgram, "Bachelor Wirtschaftsinformatik") )
+	
+	FILTER ( REGEX(?keywords, "bpmn", "i") || REGEX(?headline, "bpmn", "i") || REGEX(?description, "bpmn", "i") )
+}
+ORDER BY ?videoLecture
