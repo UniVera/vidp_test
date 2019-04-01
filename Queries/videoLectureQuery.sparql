@@ -6,10 +6,10 @@ PREFIX vide: <https://bmake.th-brandenburg.de/vide#>
 SELECT ?description ?url ?headline ?about ?thumbnail
 WHERE {
 	vide:BPMN1 	schema:description 	?description ;
-				schema:headline 	?headline ;
-				schema:url 			?url ; 
-				schema:inLanguage 	?language ;
-				schema:thumbnail 	?logo .
-	?logo 		schema:identifier 	?thumbnail .
+			schema:headline 	?headline ;
+			schema:url 			?url ; 
+			schema:inLanguage 	?language ;
+			schema:thumbnail 	?logo .
+	?logo 	schema:identifier 	?thumbnail .
 	FILTER ( lang(?headline) = ?language)
 	}
