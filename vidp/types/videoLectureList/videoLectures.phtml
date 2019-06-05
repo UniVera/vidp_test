@@ -4,6 +4,7 @@
     <!-- Laden des Scripts zum Aktivieren des Zustandes "Indeterminate" für Checkboxes -->
     <script type="text/javascript" src="<?= $this->baseUri ?>/js/indeterminate.js"></script>
 </head>
+<body OnLoad="document..focus();">
 <?php
 session_start();
 ?>
@@ -90,7 +91,8 @@ $this->querylist($studyProgramQuery, 'vidp/types/videoLectureList/filterNames.ph
 
 <!-- Erzeugung des Formulars für die Filter -->
 <div id="filter" class="collapse jumbotron container-fluid">
-    <form method="GET" id="search_form">
+    <form method="GET" id="search_form" name="search_form">
+        <input type="hidden" id="pageID" name="pageID" form="search_form" value="1">
         <div class="row">
             <div class="col-md-4 col-sm-6">
                 <table class="table responsive">
@@ -325,8 +327,22 @@ if ($_GET['search'] == "" && ($_GET["lang1"] != "" || $_GET["lang2"] != "" || le
         $videoLectureElementQuery = substr($videoLectureElementQuery, 0, -3) . " )";
         #$videoLectureElementQuery .= '} ORDER BY STRLEN(REPLACE(REPLACE(CONCAT(?headline, ?description,?keywords), "'. $searchWord .'", "#", "i"), "[^#]", ""))';
     }
-    #else {
-    $videoLectureElementQuery .= '} ORDER BY ?videoLecture';
+    $videoLectureElementQuery .= '}';
+    #Aufzählen der Elemente in $_GET um die Paginierung aktivieren oder deaktivieren
+    $keyNum = 0;
+    foreach ($_GET as $key => $value) {
+        $keyNum++;
+    }
+    if ($keyNum == 0 || $keyNum == 1) {
+        if (!isset($_GET["pageID"])) {
+            $videoLectureElementQuery .= 'LIMIT 10';
+        } else {
+            $videoLectureElementQuery .=  'OFFSET ' . ($_GET["pageID"]-1) * 10;
+            $videoLectureElementQuery .=  'LIMIT 10';
+        }
+    }
+    $videoLectureElementQuery .= 'ORDER BY ?videoLecture';
+
     #}
 
     # Funktion für Lecturerlist für Suchkriterienliste
@@ -355,5 +371,31 @@ if ($_GET['search'] == "" && ($_GET["lang1"] != "" || $_GET["lang2"] != "" || le
 
     <script> toggleAllCheckboxesToIndeterminate(); </script>
 
+    <?php #Diese Query ist zum Aufzählen der Videovorlesungen für die Paginierung.
+          $videoLectureCountQuery =  'PREFIX vidp: <https://bmake.th-brandenburg.de/vidp#>
+                                      PREFIX schema: <https://schema.org/>
+                                      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+                                      SELECT DISTINCT count(?videoLectures) AS ?VLC
+                                      WHERE 
+                                      {
+                                        ?videoLectures a vidp:VideoLecture .
+                                      }';
+          $videoLectureCount = $this->querylist($videoLectureCountQuery, 'vidp/types/videoLectureList/videoLectureCount.phtml');
+          $pageCount = $videoLectureCount / 10; #Paginierung durch jeweils 10 Videovorlesungen
+          if ($videoLectureCount % 10 != 0) $pageCount++;
+    ?>
 
 </div>
+
+<?php #Hier werden die Buttons für die Paginierung erzeugt.
+    if ($keyNum == 0 || $keyNum == 1) {
+    echo '<nav aria-label="Page navigation example" align="center">';
+    echo '<ul class="pagination">';
+            for ($i = 1; $i <= $pageCount; $i++){
+                $active = ((!isset($_GET["pageID"]) && $i == 1) || isset($_GET["pageID"]) && $_GET["pageID"] == $i) ? 'active' : '';
+                echo '<li class="page-item ' . $active . '"><a class="page-link" href="https://fbwtube.th-brandenburg.de/OntoWiki/fbwTube/VideoVorlesungen.html?pageID=' . $i . '" >' . $i . '</a></li>';
+            }
+    echo '</ul>';
+    echo '</nav>';
+}
+?>
