@@ -267,7 +267,7 @@ if ($_GET['search'] == "" && ($_GET["lang1"] != "" || $_GET["lang2"] != "" || le
                                 rdfs:label ?modul_label .
                                 ?modul schema:isPartOf ?studyProgram .
                                 ?studyProgram rdfs:label ?labelStudyProgram .
-                                FILTER ( lang(?headline) = "de" ) .
+                                FILTER ( lang(?headline) = "de" && lang(?description) = "de" ) .
                                 ?doubleClip schema:isPartOf ?videoLecture .';
 
     $lecturerChecked = false;
@@ -381,7 +381,7 @@ if ($_GET['search'] == "" && ($_GET["lang1"] != "" || $_GET["lang2"] != "" || le
                                         ?videoLectures a vidp:VideoLecture .
                                       }';
           $videoLectureCount = $this->querylist($videoLectureCountQuery, 'vidp/types/videoLectureList/videoLectureCount.phtml');
-          $pageCount = $videoLectureCount / 10; #Paginierung durch jeweils 10 Videovorlesungen
+          $pageCount = (int)floor($videoLectureCount / 10); #Paginierung durch jeweils 10 Videovorlesungen
           if ($videoLectureCount % 10 != 0) $pageCount++;
     ?>
 
