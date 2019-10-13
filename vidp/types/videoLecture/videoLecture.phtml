@@ -20,7 +20,7 @@
     $videoLectureQuery .= 'schema:url ?url ; schema:inLanguage ?language ;' . PHP_EOL;
     $videoLectureQuery .= 'schema:thumbnail ?logo .' . PHP_EOL;
     $videoLectureQuery .= '?logo schema:identifier ?thumbnail .' . PHP_EOL;
-    $videoLectureQuery .= 'FILTER( lang(?headline) = ?language)' . PHP_EOL;
+    $videoLectureQuery .= 'FILTER( lang(?headline) = ?language && lang(?description) = ?language)' . PHP_EOL;
     $videoLectureQuery .= '}' . PHP_EOL;
     ?>
 
