@@ -20,7 +20,7 @@
     $videoLectureQuery .= 'schema:url ?url ; schema:inLanguage ?language ;' . PHP_EOL;
     $videoLectureQuery .= 'schema:thumbnail ?logo .' . PHP_EOL;
     $videoLectureQuery .= '?logo schema:identifier ?thumbnail .' . PHP_EOL;
-    $videoLectureQuery .= 'FILTER( lang(?headline) = ?language && lang(?description) = ?language)' . PHP_EOL;
+    $videoLectureQuery .= 'FILTER( lang(?headline) = "en" && lang(?description) = "en")' . PHP_EOL;
     $videoLectureQuery .= '}' . PHP_EOL;
     ?>
 
@@ -66,13 +66,13 @@
     <?= $this->querylist($videoLectureQuery, 'vidp/types/videoLecture/videoInfo.phtml', array('time' => $time)) ?>
 
     <h5>
-        Diese Videovorlesung beinhaltet folgende Teile:
+        This video lecture divided into the following sections:
     </h5>
     <table class="table responsive table-hover">
         <thead>
             <tr>
-                <th class="text-left">Teilvideo</th>
-                <th class="text-right">Dauer</th>
+                <th class="text-left">Lecture section</th>
+                <th class="text-right">Length</th>
             </tr>
         </thead>
         <?= $this->querylist($videoLectureClipsQuery, 'vidp/types/videoLecture/clipInfo.phtml', array('block' => 'video')) ?>
@@ -80,7 +80,7 @@
 
     <br>
     <h5>
-        Diese Videovorlesung ist Bestandteil folgender Module:
+        This video lecture is a part of the following modules:
     </h5>
     <?= $this->querylist($videoLectureAboutQuery, 'vidp/types/videoLecture/aboutQuery.phtml', array()) ?>
 

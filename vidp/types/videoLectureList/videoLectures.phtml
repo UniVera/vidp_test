@@ -4,7 +4,7 @@
     <!-- Laden des Scripts zum Aktivieren des Zustandes "Indeterminate" für Checkboxes -->
     <script type="text/javascript" src="<?= $this->baseUri ?>/js/indeterminate.js"></script>
 </head>
-<body OnLoad="document..focus();">
+<body>
 <?php
 session_start();
 ?>
@@ -17,7 +17,7 @@ session_start();
 <button type="button" id="filterButton" class="btn btn-success btn-lg btn-block" aria-pressed="true"
         data-toggle="collapse"
         data-target="#filter" style="margin-bottom: 30px"><i class="fas fa-filter"></i> &nbsp;
-    Filtern
+    Filter
 </button>
 
 <!-- Script zum visuellen Aktivieren und Deaktivieren beim Klicken des Buttons "Filtern" -->
@@ -54,13 +54,16 @@ $this->querylist($lecturerQuery, 'vidp/types/videoLectureList/filterNames.phtml'
 
 <?php
 #Diese Query ist nur für Auflisten der Module als Dropdown-Menü.
-$moduleQuery = "PREFIX ns2: <https://bmake.th-brandenburg.de/vidp#>
-                PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-                SELECT DISTINCT ?module
+$moduleQuery = "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+                PREFIX schema: <https://schema.org/>
+                PREFIX ns2: <https://bmake.th-brandenburg.de/vidp#>
+                SELECT DISTINCT ?moduleName
                 WHERE {
-                ?moduleUri a ns2:Module;
-                rdfs:label ?module.
-                }";
+                ?moduleUri a ns2:Module ;
+                schema:name ?moduleName.       
+                FILTER (lang(?moduleName) ='en')
+                }
+                ";
 ?>
 
 <?php
@@ -73,12 +76,14 @@ $this->querylist($moduleQuery, 'vidp/types/videoLectureList/filterNames.phtml');
 
 <?php
 #Diese Query ist nur für Auflisten der Studiengänge als Dropdown-Menü.
-$studyProgramQuery = "PREFIX ns2: <https://bmake.th-brandenburg.de/vidp#>
-                      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-                      SELECT DISTINCT ?studyProgram
+$studyProgramQuery = "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+                      PREFIX schema: <https://schema.org/>
+                      PREFIX ns2: <https://bmake.th-brandenburg.de/vidp#>
+                      SELECT DISTINCT ?studyProgramName
                       WHERE {
                       ?studyProgramUri a ns2:StudyProgram;
-                      rdfs:label ?studyProgram.
+                      schema:name ?studyProgramName.
+                      FILTER (lang(?studyProgramName) ='en')
                       }";
 ?>
 
@@ -98,7 +103,7 @@ $this->querylist($studyProgramQuery, 'vidp/types/videoLectureList/filterNames.ph
                 <table class="table responsive">
                     <thead>
                     <tr>
-                        <th class="text-left"><i class="fas fa-globe-americas"></i> &nbsp; Sprache</th>
+                        <th class="text-left"><i class="fas fa-globe-americas"></i> &nbsp; Language</th>
                     </tr>
                     </thead>
                     <tr>
@@ -108,7 +113,7 @@ $this->querylist($studyProgramQuery, 'vidp/types/videoLectureList/filterNames.ph
                                        id="lang1" name="lang1" <?php echo($_GET["lang1"] == "en" ? "checked" : "") ?>>
                                 <!-- Kontrollieren, ob Checbox gesetzt wurde -->
                                 <label class="form-check-label" for="lang1">
-                                    Englisch
+                                    English
                                 </label>
                             </div>
                         </td>
@@ -120,7 +125,7 @@ $this->querylist($studyProgramQuery, 'vidp/types/videoLectureList/filterNames.ph
                                        id="lang2" name="lang2" <?php echo($_GET["lang2"] == "de" ? "checked" : "") ?>>
                                 <!-- Kontrollieren, ob Checbox gesetzt wurde -->
                                 <label class="form-check-label" for="lang2">
-                                    Deutsch
+                                    German
                                 </label>
                             </div>
                         </td>
@@ -131,7 +136,7 @@ $this->querylist($studyProgramQuery, 'vidp/types/videoLectureList/filterNames.ph
                 <table class="table responsive">
                     <thead>
                     <tr>
-                        <th class="text-left"><i class="fas fa-user"></i> &nbsp; Dozent(in)</th>
+                        <th class="text-left"><i class="fas fa-user"></i> &nbsp; Lecturer</th>
                     </tr>
                     </thead>
                     <?php
@@ -161,14 +166,14 @@ $this->querylist($studyProgramQuery, 'vidp/types/videoLectureList/filterNames.ph
                 <table class="table responsive">
                     <thead>
                     <tr>
-                        <th class="text-left"><i class="fas fa-book"></i> &nbsp; Modul</th>
+                        <th class="text-left"><i class="fas fa-book"></i> &nbsp; Module</th>
                     </tr>
                     </thead>
                     <tr>
                         <td>
                             <select class="form-control responsive" name="module" form="search_form">
                                 <?php
-                                echo "<option value=''>--Bitte wählen Sie ein Modul aus--</option>";
+                                echo "<option value=''>--Please select a module--</option>";
                                 #Generische Erzeugung der Dropdown-Menü für Module
                                 for ($i = 0; $i < count($_SESSION['modules']); $i++) {
                                     $currentModule = $_SESSION['modules'][$i];
@@ -183,14 +188,14 @@ $this->querylist($studyProgramQuery, 'vidp/types/videoLectureList/filterNames.ph
                 <table class="table responsive">
                     <thead>
                     <tr>
-                        <th class="text-left"><i class="fas fa-graduation-cap"></i> &nbsp; Studiengang</th>
+                        <th class="text-left"><i class="fas fa-graduation-cap"></i> &nbsp; Study Program</th>
                     </tr>
                     </thead>
                     <tr>
                         <td>
                             <select class="form-control responsive" name="studyProgram" form="search_form">
                                 <?php
-                                echo "<option value=''>--Bitte wählen Sie einen Studiengang aus--</option>";
+                                echo "<option value=''>--Please select a study program--</option>";
                                 #Generische Erzeugung der Dropdown-Menü für Studiengänge
                                 for ($i = 0; $i < count($_SESSION['studyPrograms']); $i++) {
                                     $currentStudyProgram = $_SESSION['studyPrograms'][$i];
@@ -206,11 +211,11 @@ $this->querylist($studyProgramQuery, 'vidp/types/videoLectureList/filterNames.ph
         </div>
         <div class="row" align="center">
             <div class="btn-group" role="group">
-                <button type="submit" class="btn btn-success" form="search_form" id="submit_filter"><i class="fas fa-check"></i>&nbsp; Anwenden</button>
+                <button type="submit" class="btn btn-success" form="search_form" id="submit_filter"><i class="fas fa-check"></i>&nbsp; Apply</button>
                 <!-- Button wird deaktiviert, wenn nichts ausgewählt wurde, also wenn $_GET leer ist.  -->
                 <button type="reset" class="btn btn-danger"
-                        onclick="location.href='/OntoWiki/fbwTube/VideoVorlesungen.html'">
-                    <i class="fas fa-undo"></i>&nbsp; Zurücksetzen
+                        onclick="location.href='/OntoWiki/fbwTube/VideoLectures.html'">
+                    <i class="fas fa-undo"></i>&nbsp; Reset
                 </button>
             </div>
         </div>
@@ -236,15 +241,15 @@ if ($_GET['search'] != "") {
 }
 if ($_GET['search'] == "" && ($_GET["lang1"] != "" || $_GET["lang2"] != "" || lecturerList(count($_SESSION['lecturers'])) != ""  || $_GET['studyProgram'] != "" || $_GET['module'] != "")) {
     echo '<div class="panel panel-default"> <div class="panel-body">Ihre Suchkriterien: ';
-        if ($_GET["lang1"] != "") $searchCriteria= "Englisch" . ", " ;
-        if ($_GET["lang2"] != "") $searchCriteria=  $searchCriteria . "Deutsch" . ", " ;
-        if ($_SESSION['lecturers'] != "") $searchCriteria=  $searchCriteria . lecturerList(count($_SESSION['lecturers']));
-        if ($_GET['studyProgram'] != "") $searchCriteria= $searchCriteria . ($_GET['studyProgram']) . ", " ;
-        if ($_GET['module'] != "") $searchCriteria= $searchCriteria . ($_GET['module']) . ", ";
-        $searchCriteria = substr_replace($searchCriteria ,"",-2);
-        echo '<b>' . $searchCriteria . '</b>';
-        echo '</div> </div>';
-    }
+    if ($_GET["lang1"] != "") $searchCriteria= "Englisch" . ", " ;
+    if ($_GET["lang2"] != "") $searchCriteria=  $searchCriteria . "Deutsch" . ", " ;
+    if ($_SESSION['lecturers'] != "") $searchCriteria=  $searchCriteria . lecturerList(count($_SESSION['lecturers']));
+    if ($_GET['studyProgram'] != "") $searchCriteria= $searchCriteria . ($_GET['studyProgram']) . ", " ;
+    if ($_GET['module'] != "") $searchCriteria= $searchCriteria . ($_GET['module']) . ", ";
+    $searchCriteria = substr_replace($searchCriteria ,"",-2);
+    echo '<b>' . $searchCriteria . '</b>';
+    echo '</div> </div>';
+}
 ?>
 
 <div class="jumbotron">
@@ -267,7 +272,7 @@ if ($_GET['search'] == "" && ($_GET["lang1"] != "" || $_GET["lang2"] != "" || le
                                 rdfs:label ?modul_label .
                                 ?modul schema:isPartOf ?studyProgram .
                                 ?studyProgram rdfs:label ?labelStudyProgram .
-                                FILTER ( lang(?headline) = "de" && lang(?description) = "de" ) .
+                                FILTER ( lang(?headline) = "en" && lang(?description) = "en" ) .
                                 ?doubleClip schema:isPartOf ?videoLecture .';
 
     $lecturerChecked = false;
@@ -372,7 +377,7 @@ if ($_GET['search'] == "" && ($_GET["lang1"] != "" || $_GET["lang2"] != "" || le
     <script> toggleAllCheckboxesToIndeterminate(); </script>
 
     <?php #Diese Query ist zum Aufzählen der Videovorlesungen für die Paginierung.
-          $videoLectureCountQuery =  'PREFIX vidp: <https://bmake.th-brandenburg.de/vidp#>
+    $videoLectureCountQuery =  'PREFIX vidp: <https://bmake.th-brandenburg.de/vidp#>
                                       PREFIX schema: <https://schema.org/>
                                       PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
                                       SELECT DISTINCT count(?videoLectures) AS ?VLC
@@ -380,21 +385,21 @@ if ($_GET['search'] == "" && ($_GET["lang1"] != "" || $_GET["lang2"] != "" || le
                                       {
                                         ?videoLectures a vidp:VideoLecture .
                                       }';
-          $videoLectureCount = $this->querylist($videoLectureCountQuery, 'vidp/types/videoLectureList/videoLectureCount.phtml');
-          $pageCount = (int)floor($videoLectureCount / 10); #Paginierung durch jeweils 10 Videovorlesungen
-          if ($videoLectureCount % 10 != 0) $pageCount++;
+    $videoLectureCount = $this->querylist($videoLectureCountQuery, 'vidp/types/videoLectureList/videoLectureCount.phtml');
+    $pageCount = (int)floor($videoLectureCount / 10); #Paginierung durch jeweils 10 Videovorlesungen
+    if ($videoLectureCount % 10 != 0) $pageCount++;
     ?>
 
 </div>
 
 <?php #Hier werden die Buttons für die Paginierung erzeugt.
-    if ($keyNum == 0 || $keyNum == 1) {
+if ($keyNum == 0 || $keyNum == 1) {
     echo '<nav aria-label="Page navigation example" align="center">';
     echo '<ul class="pagination">';
-            for ($i = 1; $i <= $pageCount; $i++){
-                $active = ((!isset($_GET["pageID"]) && $i == 1) || isset($_GET["pageID"]) && $_GET["pageID"] == $i) ? 'active' : '';
-                echo '<li class="page-item ' . $active . '"><a class="page-link" href="https://fbwtube.th-brandenburg.de/OntoWiki/fbwTube/VideoVorlesungen.html?pageID=' . $i . '" >' . $i . '</a></li>';
-            }
+    for ($i = 1; $i <= $pageCount; $i++){
+        $active = ((!isset($_GET["pageID"]) && $i == 1) || isset($_GET["pageID"]) && $_GET["pageID"] == $i) ? 'active' : '';
+        echo '<li class="page-item ' . $active . '"><a class="page-link" href="https://fbwtube.th-brandenburg.de/OntoWiki/fbwTube/VideoLectures.html?pageID=' . $i . '" >' . $i . '</a></li>';
+    }
     echo '</ul>';
     echo '</nav>';
 }

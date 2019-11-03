@@ -3,7 +3,7 @@
     <div class="block">
         <?php
         $base = "https://fbwtube.th-brandenburg.de/OntoWiki/fbwTube/";
-        $url = $base . "VideoVorlesung.html?id=" . urlencode($this->videoLecture);
+        $url = $base . "VideoLecture.html?id=" . urlencode($this->videoLecture);
         ?>
 
         <?php
@@ -62,14 +62,14 @@
                         <tr>
                             <td>
                     <?php
-                    echo "Sprache: " . $this->language . " &middot; ";
+                    echo "Language: " . $this->language . " &middot; ";
                     echo sizeof($result);
                     if (sizeof($result) > 1) {
-                        echo " Teile &middot; ";
+                        echo " Sections &middot; ";
                     } else {
-                        echo " Teil &middot; ";
+                        echo " Section &middot; ";
                     }
-                    echo "Gesamtdauer: ";
+                    echo "Total time: ";
                     echo gmdate("H:i:s", $time);
                     ?>
                             </td>

@@ -6,11 +6,11 @@
                 <td>
                     <?php
                     #Umwandeln der Monatszahlen in Strings
-                    $months = array("01"=>"Jan. ", "02"=>"Feb. ", "03"=>"M&auml;rz ", "04"=>"Apr. ", "05"=>"Mai ", "06"=>"Jun. ", "07"=>"Jul. ", "08"=>"Aug. ", "09"=>"Sep. ", "10"=>"Okt. ", "11"=>"Nov. ", "12"=>"Dez. ");
+                    $months = array("01"=>"Jan. ", "02"=>"Feb. ", "03"=>"Mar. ", "04"=>"Apr. ", "05"=>"May ", "06"=>"Jun. ", "07"=>"Jul. ", "08"=>"Aug. ", "09"=>"Sep. ", "10"=>"Oct. ", "11"=>"Nov. ", "12"=>"Dec. ");
                     $month = date_format($this->time, "m");
                     $month = $months[$month];
                     $year = date_format($this->time, "Y");
-                    echo "<h4>" . $this->headline . "<span style='font-size: 70%;'>".str_repeat('&nbsp;', 10)."erstellt im ".$month.$year."</span></h4>";
+                    echo "<h4>" . $this->headline . "<span style='font-size: 70%;'>".str_repeat('&nbsp;', 10)."created in ".$month.$year."</span></h4>";
                     ?>
                 </td>
                 <td width="16%" align="center">
@@ -31,7 +31,7 @@
                 <td align="center" colspan="2">
                     <?php
                     echo "<a target=_blank href=$this->url width='30' height='30'><img src='https://fbwtube.th-brandenburg.de/OntoWiki/extensions/site/sites/vidp/img/play_button.png' alt='Cinque Terre' width='32' height='32'></a>";
-                    echo "<br> Zur Videovorlesung";
+                    echo "<br> To the video lecture";
                     ?>
                 </td>
             </tr>

@@ -59,6 +59,7 @@ $logo_link = "https://drive.google.com/uc?export=view&id=17E26Sc9nfJth8aqTtZ5Rkt
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
     <script type="text/javascript" src="<?= $this->baseUri ?>/js/reset_filter.js"></script>
+    <script type="text/javascript" src="<?= $this->baseUri ?>/js/language.js"></script>
     <?php
     // includes the GA header script
     // includes the exhibit header links
@@ -81,17 +82,36 @@ $logo_link = "https://drive.google.com/uc?export=view&id=17E26Sc9nfJth8aqTtZ5Rkt
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand"
-                   href="https://fbwtube.th-brandenburg.de/OntoWiki/fbwTube/Home"><img
+                   href="https://fbwtube.th-brandenburg.de/OntoWiki/fbwTube/VideoLectures.html"><img
                             style="max-width:36px; margin-top: -10px;"
                             src=<?= $logo_link ?>>
                     fbwTube</a>
             </div>
             <?php
+            $site_de = 'site_de';
+            $site_en = 'site_en';
+            $language = '<div style="margin-bottom: 04px; margin-top: 08px; float: right;">
+                            <form method="GET" id="search_form" action="https://fbwtube.th-brandenburg.de/OntoWiki/fbwTube/VideoLectures.html">
+                                <div class="custom-control custom-radio" style="display: none">
+                                        <input type="radio" class="custom-control-input" id="lang_de" name="site_lang" checked value="de">
+                                        <input type="radio" class="custom-control-input" id="lang_en" name="site_lang" value="en">
+                                </div>
+                                <ul class="nav navbar-nav navbar-right">
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Sprache <span class="caret" ></span></a>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li><button class="btn btn-default" type="submit" form="search_form" onclick="change_language()" data-arg="lang_de" style="border: none">Deutsch</button></li>
+                                            <li><button class="btn btn-default" type="submit" form="search_form" onclick="change_language()" data-arg="lang_en" style="border: none">English</button></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </form>
+                        </div>';
             $search = '
                       <div style="margin-bottom: 04px; margin-top: 08px; float: right;">
-                          <form method="GET" id="search_form" action="https://fbwtube.th-brandenburg.de/OntoWiki/fbwTube/VideoVorlesungen.html">
+                          <form method="GET" id="search_form" action="https://fbwtube.th-brandenburg.de/OntoWiki/fbwTube/VideoLectures.html">
                               <div class="input-group"  style="max-width: 230px; width: auto;">
-                                  <input class="form-control" type="text" placeholder="Suchen..." name="search" value="' . htmlspecialchars($_GET['search']) . '">
+                                  <input class="form-control" type="text" placeholder="Search..." name="search" value="' . htmlspecialchars($_GET['search']) . '">
                                   <span class="input-group-btn">
                                   <button class="btn btn-default" type="submit" form="search_form" onclick="reset_filter()"><i class="fa fa-search"></i></button>
                                   </span>
